@@ -1,0 +1,129 @@
+<app-nav-bar></app-nav-bar>
+
+<body>
+
+    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w680">
+            <div class="wrapper fadeInDown">
+                <div class="card card-4">
+                    <div class="card-body">
+                        <h2 style="text-align: center;" class="title">REGISTRAR PACIENTE</h2>
+                        <form [formGroup]="formularioRegistro">
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Nombre</label>
+                                        <input [(ngModel)]="paciente.nombre" type="text" class="input--style-4"
+                                            id="nombre" placeholder="Ingrese nombre" formControlName="nombre">
+                                        <small class="invalid" *ngIf="formularioRegistro.controls['nombre'].errors?.['required'] &&
+                                        formularioRegistro.controls['nombre'].touched">
+                                            El nombre es requerido
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Apellido</label>
+                                        <input [(ngModel)]="paciente.apellido" type="text" class="input--style-4"
+                                            id="apellido" placeholder="Ingrese apellido" formControlName="apellido">
+                                        <small class="invalid" *ngIf="formularioRegistro.controls['apellido'].errors?.['required'] &&
+                                        formularioRegistro.controls['apellido'].touched">
+                                            El apellido es requerido
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">DNI</label>
+                                        <input [(ngModel)]="paciente.dni" type="number" class="input--style-4" id="dni"
+                                            placeholder="Ingrese DNI" formControlName="dni">
+                                        <small class="invalid" *ngIf="formularioRegistro.controls['dni'].errors?.['required'] &&
+                                        formularioRegistro.controls['dni'].touched">
+                                            El DNI es requerido
+                                        </small>
+                                        <!--small class="invalid" *ngIf="formularioRegistro.controls['dni'].errors?.['maxlength'] &&
+                                    formularioRegistro.controls['dni'].touched">
+                                            El DNI tiene como máximo ocho digitos
+                                        </small-->
+
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Obra social</label>
+                                        <input [(ngModel)]="paciente.obraSocial" type="text" class="input--style-4"
+                                            id="obraSocial" placeholder="Ingrese obra social"
+                                            formControlName="obraSocial">
+                                        <small class="invalid" *ngIf="formularioRegistro.controls['obraSocial'].errors?.['required'] &&
+                                        formularioRegistro.controls['obraSocial'].touched">
+                                            La obra social es requerida
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Edad</label>
+                                        <input [(ngModel)]="paciente.edad" type="number" class="input--style-4"
+                                            id="edad" placeholder="Ingrese edad" formControlName="edad">
+                                        <small class="invalid" *ngIf="formularioRegistro.controls['edad'].errors?.['required'] &&
+                                        formularioRegistro.controls['edad'].touched">
+                                            La edad es requerida
+                                        </small>
+                                        <!--small class="invalid" *ngIf="formularioRegistro.controls['dni'].errors?.['maxlength'] &&
+                                    formularioRegistro.controls['dni'].touched">
+                                            El DNI tiene como máximo ocho digitos
+                                        </small-->
+
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Correo electrónico</label>
+                                        <input [(ngModel)]="paciente.mail" type="text" class="input--style-4" id="email"
+                                            placeholder="Ingrese correo electrónico" formControlName="email">
+                                        <small class="invalid" *ngIf="formularioRegistro.controls['email'].errors?.['required'] &&
+                                    formularioRegistro.controls['email'].touched">
+                                            El correo electrónico es requerido
+                                        </small>
+                                        <small class="invalid" *ngIf="formularioRegistro.controls['email'].errors?.['email']&&
+                                formularioRegistro.controls['email'].touched">
+                                            El correo electrónico no tiene el formato correcto
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Contraseña</label>
+                                        <input [(ngModel)]="paciente.password" type="password" class="input--style-4"
+                                            id="clave" placeholder="Ingrese contraseña" formControlName="clave">
+                                        <small class="invalid" *ngIf="formularioRegistro.controls['clave'].errors?.['required'] &&
+                                    formularioRegistro.controls['clave'].touched">
+                                            La contraseña es requerida
+                                        </small>
+                                        <small *ngIf="formularioRegistro.controls['clave'].errors?.['minlength']" >
+                                            La contraseña debe tener como mínimo seis digitos
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-9 mb-3">
+                                    <input type="file" multiple  formControlName='imagen' (change)="change($event)">
+                                    <small class="invalid" *ngIf="formularioRegistro.controls['imagen'].errors?.['required'] &&
+                                        formularioRegistro.controls['imagen'].touched">
+                                        Las imagenes son requeridas
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="p-t-15">
+                                <button (click)="registrar()" type="submit">Registrate</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

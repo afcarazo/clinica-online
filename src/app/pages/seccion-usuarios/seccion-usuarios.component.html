@@ -1,0 +1,37 @@
+<app-nav-bar></app-nav-bar>
+
+<body style="margin-top: 60px;">
+    <h4 style="color:#fff; background-color:  rgba(0, 0, 0, 0.363); text-align: center;">
+        LISTADO USUARIOS
+    </h4>
+    <table class="table table-hover" style="text-align: center;">
+
+        <thead>
+            <tr>
+                <th scope="col">NOMBRE</th>
+                <th scope="col">APELLIDO</th>
+                <th scope="col">EDAD</th>
+                <th scope="col">DNI</th>
+                <th scope="col">MAIL</th>
+                <th scope="col">PERFIL</th>
+                <th scope="col">FOTO</th>
+                <th scope="col">HABILITAR-DESABILITAR</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="cursor: pointer" *ngFor="let usuario of this.listadoUsuarios">
+                <td>{{usuario.nombre}}</td>
+                <td>{{usuario.apellido}}</td>
+                <td>{{usuario.edad}}</td>
+                <td>{{usuario.dni}}</td>
+                <td>{{usuario.mail}}</td>
+                <td>{{usuario.perfil}}</td>
+                <td><img width="50" src="{{ usuario.fotoUno }}" alt="imagen" /></td>
+                <td *ngIf="usuario.perfil == 'especialista'"><button *ngIf="!this.usuario.aprobado"
+                        class="habilitar">habilitar</button>
+                    <button *ngIf="this.usuario.aprobado" class="desabilitar">desabilitar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>

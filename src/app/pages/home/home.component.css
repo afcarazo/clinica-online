@@ -1,0 +1,94 @@
+ /* Blocks */
+ .site-blocks-cover {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: relative; }
+    .site-blocks-cover, .site-blocks-cover > .container > .row {
+      min-height: 700px;
+      height: calc(100vh); }
+    .site-blocks-cover.inner-page, .site-blocks-cover.inner-page .row {
+      min-height: 400px;
+      height: 700px; }
+    .site-blocks-cover h2 {
+      font-size: 14px;
+      font-weight: normal;
+      color: #000;
+      letter-spacing: .2em;
+      text-transform: uppercase; }
+    @media (max-width: 991.98px) {
+      .site-blocks-cover .featured-hero-product {
+        margin-top: 10%;
+        position: absolute; } }
+    .site-blocks-cover h1 {
+      font-size: 50px;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 30px;
+      text-transform: uppercase; }
+      @media (min-width: 768px) {
+        .site-blocks-cover h1 {
+          font-size: 70px; } }
+    .site-blocks-cover p {
+      color: #fff;
+      font-size: 20px;
+      line-height: 35px; }
+    .site-blocks-cover .intro-text {
+      font-size: 16px;
+      color: #fff;
+      line-height: 1.5; }
+    .site-blocks-cover.inner-page .site-block-cover-content {
+      margin-top: 20%;
+      text-align: center; }
+      @media (min-width: 768px) {
+        .site-blocks-cover.inner-page .site-block-cover-content {
+          margin-top: 30%; } }
+    .site-blocks-cover .sub-title {
+      color: #fff; }
+    @media (max-width: 991.98px) {
+      .site-blocks-cover .img-1 {
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto; } }
+    .site-blocks-cover .btn {
+      padding: 20px 30px; }
+
+/* From uiverse.io by @adamgiebl */
+button {
+  background: linear-gradient(-45deg, #3f00b5, #257afa, #27c8b7, #3f00b5);
+  background-size: 800% 400%;
+  padding: 1em 2em;
+  display: inline-block;
+  border: none;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: 700;
+  color: white;
+  transition: all .5s ease-in-out;
+  animation: gradient 10s infinite cubic-bezier(.62, .28, .23, .99) both;
+ }
+ 
+ button:hover {
+  animation: gradient 3s infinite;
+  transform: scale(1.05);
+ }
+ 
+ button:active {
+  animation: gradient 3s infinite;
+  transform: scale(0.8);
+ }
+ 
+ @keyframes gradient {
+  0% {
+   background-position: 0% 50%;
+  }
+ 
+  50% {
+   background-position: 100% 50%;
+  }
+ 
+  100% {
+   background-position: 0% 50%;
+  }
+ }
+      
