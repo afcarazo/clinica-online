@@ -199,7 +199,24 @@ input[type="button"].btn-block {
   background: #55a7f3;
   color: #67b6ff(255, 255, 255);
 }
+.card:hover {
+  border: 1px solid #8a98d4;
+  color: #337fc5(255, 255, 255);
+  box-shadow: #000000;
+  -webkit-box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.582);
+  -moz-box-shadow: 0px 10px 34px -15px rgba(5, 5, 5, 0.603);
+  box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.61);
+}
 
+.card-paciente:hover{
+  background: #ff0000;
+  -webkit-box-shadow: 0px 10px 34px -15px rgba(255, 0, 0, 0.582);
+  -moz-box-shadow: 0px 10px 34px -15px rgba(255, 0, 0, 0.603);
+  box-shadow: 0px 10px 34px -15px rgba(243, 0, 0, 0.61);
+}
+.card-especialista {
+  background: #001aff;
+}
 
 .btn.btn-white {
   background: #fff;

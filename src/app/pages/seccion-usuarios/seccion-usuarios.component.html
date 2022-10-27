@@ -27,11 +27,16 @@
                 <td>{{usuario.mail}}</td>
                 <td>{{usuario.perfil}}</td>
                 <td><img width="50" src="{{ usuario.fotoUno }}" alt="imagen" /></td>
-                <td *ngIf="usuario.perfil == 'especialista'"><button *ngIf="!this.usuario.aprobado"
-                        class="habilitar">habilitar</button>
-                    <button *ngIf="this.usuario.aprobado" class="desabilitar">desabilitar</button>
+                <td *ngIf="usuario.perfil == 'especialista'">
+                    <button *ngIf="!this.usuario.aprobado" class="habilitar" (click)="habilitarEspecialista(usuario.uid)">habilitar</button>
+                    <button *ngIf="this.usuario.aprobado" class="desabilitar"  (click)="deshabilitarEspecialista(usuario.uid)">deshabilitar</button>
                 </td>
             </tr>
         </tbody>
     </table>
+    <div style="text-align: center;">
+        <button class="elegir" (click)="navegarARegistroPaciente()" >Registrar paciente</button>
+        <button class="elegir" (click)="navegarARegistroEspecialista()" >Registrar especialista</button>
+        <button class="elegir" (click)="navegarARegistroAdministrador()">Registrar administrador</button>
+    </div>
 </body>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -7,13 +8,30 @@ import { Router } from '@angular/router';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
-
-  constructor(private router:Router) { }
+  activo: boolean;
+  administrador: boolean=false;
+  constructor(private router: Router, private auth: AuthService) {
+    this.activo = this.auth.sesionActiva;
+    if (this.auth.usuarioActual !=undefined ) {
+      if (this.auth.usuarioActual.perfil === "administrador") { 
+        this.administrador = true;
+      }
+     }
+   }
 
   ngOnInit(): void {
   }
   navegarALogin() { 
     this.router.navigateByUrl('login');
   }
+  navegarAdminUsuarios() { 
+    this.router.navigateByUrl('usuarios');
+  }
 
+  cerrarSesion() {
+    this.activo = this.auth.sesionActiva;
+    this.auth.logout();
+    this.router.navigateByUrl('');
+    window.location.reload;
+   }
 }

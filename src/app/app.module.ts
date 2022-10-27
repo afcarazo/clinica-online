@@ -18,6 +18,8 @@ import { DatePipe } from '@angular/common';
 import { RegistrarPacienteComponent } from './pages/registrar-paciente/registrar-paciente.component';
 import { RegistrarEspecialistaComponent } from './pages/registrar-especialista/registrar-especialista.component';
 import { SeccionUsuariosComponent } from './pages/seccion-usuarios/seccion-usuarios.component';
+import { RegistrarAdminComponent } from './pages/registrar-admin/registrar-admin.component';
+import { PacienteEspecilistaComponent } from './pages/paciente-especilista/paciente-especilista.component';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { SeccionUsuariosComponent } from './pages/seccion-usuarios/seccion-usuar
     LoginComponent,
     RegistrarPacienteComponent,
     RegistrarEspecialistaComponent,
-    SeccionUsuariosComponent
+    SeccionUsuariosComponent,
+    RegistrarAdminComponent,
+    PacienteEspecilistaComponent
   ],
   imports: [
     BrowserModule,

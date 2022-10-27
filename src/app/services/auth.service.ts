@@ -2,11 +2,15 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import {
+  AngularFirestoreCollection,
+  AngularFirestore,
+} from '@angular/fire/compat/firestore';
 import { NotificationsService } from './notifications.service';
 import { User } from '../class/user';
 import { Paciente } from '../class/paciente';
 import { Especialista } from '../class/especialista';
+import { Administrador } from '../class/administrador';
 
 @Injectable({
   providedIn: 'root'
@@ -43,9 +47,10 @@ export class AuthService {
               password: paciente.password,
               fotoUno: paciente.fotoUno,
               fotoDos: paciente.fotoDos,
-              perfil:  paciente.perfil
-            }).then(() => { 
-              this.notification.showNotificationSuccess('Se registro con exito','Verifique su correo.');
+              perfil: 'paciente',
+              uid: data.user?.uid
+            }).then(() => {
+              this.notification.showNotificationSuccess('Se registro con exito', 'Verifique su correo.');
             })
 
         }).catch(error => {
@@ -62,11 +67,11 @@ export class AuthService {
           }
         })
     } catch (error) {
-      this.notification.showNotificationError('ERROR',error);
-     }
-    
+      this.notification.showNotificationError('ERROR', error);
+    }
+
   }
- 
+
   async registrarEspecialista(especialista: Especialista) {
     try {
       this.auth.createUserWithEmailAndPassword(especialista.mail, especialista.password).
@@ -81,9 +86,11 @@ export class AuthService {
               mail: especialista.mail,
               password: especialista.password,
               fotoUno: especialista.fotoUno,
-              perfil:especialista.perfil
-            }).then(() => { 
-              this.notification.showNotificationSuccess('Se registro con exito','Verifique su correo.');
+              perfil: 'especialista',
+              uid: data.user?.uid,
+              aprobado: false
+            }).then(() => {
+              this.notification.showNotificationSuccess('Se registro con exito', 'Verifique su correo.');
             })
 
         }).catch(error => {
@@ -100,43 +107,88 @@ export class AuthService {
           }
         })
     } catch (error) {
-      this.notification.showNotificationError('ERROR',error);
-     }
-    
+      this.notification.showNotificationError('ERROR', error);
+    }
+
   }
- 
+  async registrarAdministrador(administrador: Administrador) {
+    try {
+      this.auth.createUserWithEmailAndPassword(administrador.mail, administrador.password).
+        then(async (data) => {
+          await data.user?.sendEmailVerification();
+          await this.firestore.collection('usuarios').doc(data.user?.uid).set(
+            {
+              nombre: administrador.nombre,
+              apellido: administrador.apellido,
+              edad: administrador.edad,
+              dni: administrador.dni,
+              mail: administrador.mail,
+              password: administrador.password,
+              fotoUno: administrador.fotoUno,
+              perfil: 'administrador',
+              uid: data.user?.uid
+            }).then(() => {
+              this.notification.showNotificationSuccess('Se registro con exito', 'Verifique su correo.');
+            })
+
+        }).catch(error => {
+          if (error.code == 'auth/email-already-in-use') {
+            this.notification.showNotificationError(
+              'ERROR',
+              'El usuario ya existe!'
+            );
+          } else {
+            this.notification.showNotificationError(
+              'ERROR',
+              error.code
+            );
+          }
+        })
+    } catch (error) {
+      this.notification.showNotificationError('ERROR', error);
+    }
+
+  }
+
   async login(email: any, password: any) {
-    try {
-      const user = await this.auth.signInWithEmailAndPassword(email, password).catch(async (error) => {
-        if (user)
-        {
-          this.uid = user.user?.uid;
-         }
-        if (error.code == 'auth/wrong-password') {
+    var retorno: any;
+    await this.auth.signInWithEmailAndPassword(email, password).then(async (ret) => {
+      this.uid = ret.user?.uid
+      retorno = ret;
+      if (ret) {
+        await this.firestore
+          .collection('usuarios')
+          .doc(this.uid)
+          .get()
+          .toPromise()
+          .then(async (doc) => {
 
-          this.notification.showNotificationError('ERROR', 'Email/contraseña incorrecta. Intente nuevamente!');
-        } else {
-          this.notification.showNotificationError('ERROR', error.message);
-        }
+            await this.firestore
+              .collection('usuarios')
+              .doc(this.uid)
+              .valueChanges()
+              .subscribe((usuario) => {
+                this.usuarioActual = usuario;
+                console.log(this.usuarioActual);
+              });
+          })
+      }
+      else {
+        retorno = null;
+      }
+    }).catch((error) => { 
+      this.notification.showNotificationError('ERROR',error);
+    } )
+    
 
-      })
-      return user;
-    } catch (error) {
-      return null;
-    }
-
+    return retorno;
+  
   }
-  logout() {
-    return this.auth.signOut();
+
+  async logout() {
+    await this.auth.signOut();
   }
-  /*async googleLogin() {
-    try {
-      return this.auth.signInWithPopup(new GoogleAuthProvider);
-    } catch (error) {
-      return null;
-    }
-  }*/
-  isLogin(user: any) {
+   isLogin(user: any) {
 
     try {
       return this.auth.onAuthStateChanged(user);
@@ -178,4 +230,19 @@ export class AuthService {
     }
     return name;
   }
+  habilitarEspecialista(uid: string) {
+    this.firestore.collection('usuarios').doc(uid).update({ aprobado: true }).catch((error) => {
+      this.notification.showNotificationError("Ocurrio un error al habilitar especialista!", error)
+    }).finally(() => {
+      this.notification.showNotificationSuccess("Especialista habilitado!", 'Exito');
+    })
+  }
+  deshabilitarEspecialista(uid: string) {
+    this.firestore.collection('usuarios').doc(uid).update({ aprobado: false }).catch((err) => {
+      this.notification.showNotificationError("Ocurrio un error al deshabilitar especialista!", 'Error')
+    }).finally(() => {
+      this.notification.showNotificationSuccess("Especialista deshabilitado!", 'Exito');
+    })
+  }
+
 }

@@ -1,38 +1,36 @@
 <app-nav-bar></app-nav-bar>
 
-<body style="margin-top: 70px;">
+<body style="margin-top: 50px; margin-bottom: 5%;">
 	<div class="wrapper fadeInDown">
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-12 col-lg-10">
 					<div class="wrap d-md-flex">
-						<div class="text-wrap p-4 p-lg-5 text-center d-flex align-items-center order-md-last">
+						<!--div class="text-wrap p-4 p-lg-5 text-center d-flex align-items-center order-md-last">
 							<div class="text w-100">
 								<h2>Registrate</h2>
 								<p>¿No tienes una cuenta?</p>
-								<button (click)="navegarRegistrarPaciente()" class="btn btn-white btn-outline-white">Registrarte paciente</button><br><br>
-								<button (click)="navegarRegistrarEspecialista()" class="btn btn-white btn-outline-white">Registrarte especialista</button>
+								<button (click)="navegarRegistrar()" class="btn btn-white btn-outline-white">Registrarte</button><br><br>
 							</div>
-						</div>
-						<div class="login-wrap p-4 p-lg-5">
-							<div class="d-flex">
+						</div-->
+						<div class="login-wrap p-4 p-lg-5" style=" width: 800%;">
+							<form action="#" class="signin-form" [formGroup]="formularioLogin"  style="margin-bottom:5%;">
 								<div class="w-100">
-									<h3 class="mb-4">Iniciar sesión</h3>
+									
+								<div class="d-flex">
+									<div class="row " style=" width: 20%; margin-top: 5%;" *ngIf="this.ingresoRapido"  >   <!--style=" width: 10%;"-->         
+										<div  style="width: 100px; height: 75px; border-color: rgba(255, 255, 255, 0.925); background-color: rgba(192, 221, 247, 0.61); cursor: pointer;"
+										*ngFor='let usuario of listadoUsuarioAccesoRapido'>
+											<div class="card" (click)='this.cargarPerfil(usuario)'>
+												<img class="card-img-top" src="{{usuario.fotoUno}}" width="60px" height="75px"  *ngIf="usuario.perfil != 'paciente'">
+												<img class="card-img-top" src="{{usuario.fotoDos}}" width="60px" height="75px" *ngIf="usuario.perfil == 'paciente'">											
+											</div>
+										</div>
 								</div>
-								<div class="w-100">
-									<p class="social-media d-flex justify-content-end">
-										<a href="#"
-											class="social-icon d-flex align-items-center justify-content-center"><span
-												class="fa fa-facebook"></span></a>
-										<a href="#"
-											class="social-icon d-flex align-items-center justify-content-center"><span
-												class="fa fa-twitter"></span></a>
-									</p>
-								</div>
-							</div>
-							<form action="#" class="signin-form" [formGroup]="formularioLogin" (ngSubmit)="login()">
+								<div style="width: 70%; margin-left: 10%; margin-top: 10%;">
 								<div class="form-group mb-3">
+									<h3 class="mb-4">Iniciar sesión</h3>	
 									<label class="label" for="name">Correo electrónico</label>
 									<input [(ngModel)]="user.email" type="text" class="form-control" id="email"
 										placeholder="Ingrese email" formControlName="email">
@@ -56,13 +54,23 @@
 								</div>
 
 								<div class="form-group">
-									<button type="submit"
-										class="form-control btn btn-primary submit px-3" style="margin-bottom: 15px;">Ingresar</button>
-									<button type="submit" (click)="quickLogin()"
-										class="form-control btn btn-primary submit px-3">Ingreso rápido</button>
+									<button *ngIf="!this.ingresoRapido" (click)="this.login()"
+										class="form-control btn btn-primary submit px-3" style="margin-bottom: 15px;" >Ingresar</button>
+									<button *ngIf="!this.ingresoRapido" (click)='this.ingresoRapido = !this.ingresoRapido'
+										class="form-control btn btn-primary submit px-3" style="margin-bottom: 15px;" >Ingreso rápido</button>
+									<button *ngIf="this.ingresoRapido" (click)='this.loginRapido()'
+										class="form-control btn btn-primary submit px-3" style="margin-bottom: 15px;" >Ingresar</button>
+							
+										<button type="submit"
+										class="form-control btn btn-primary submit px-3" style="margin-bottom: 15px;" (click)="navegarRegistrar()">Registrate</button>
+								
+									</div>
 								</div>
-
+							</div>
+						</div>
 							</form>
+					
+						
 						</div>
 					</div>
 				</div>

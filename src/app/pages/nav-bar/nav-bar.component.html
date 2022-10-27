@@ -2,7 +2,7 @@
 
 
 
-    <div class="site-navbar py-2" style="background-color: rgba(255, 255, 255, 0.438);">
+    <div class="site-navbar py-2" style="background-color: rgb(255, 255, 255);">
 
         <div class="search-wrap">
           <div class="container">
@@ -17,15 +17,16 @@
           <div class="d-flex align-items-center justify-content-between">
             <div class="logo">
               <div class="site-logo">
-                <img src="../../../assets/icon.png" width="50px" style="padding: 10px;">
+                <img src="../../../favicon.ico" width="50px" style="padding: 10px;">
                 <a href="" class="logo">Clinica I-V</a>
               </div>
             </div>
             <div class="main-nav d-none d-lg-block">
               <nav class="site-navigation text-right text-md-center" role="navigation">
                 <ul class="site-menu js-clone-nav d-none d-lg-block">
-                  <li class="active"><a href="index.html">Inicio</a></li>
-                  <li class="active"><a href="usuarios">Usuarios</a></li>
+                  <button *ngIf="!this.activo" (click)="navegarALogin()" class="button">INICIAR SESIÓN</button>
+                  <button *ngIf="this.activo" (click)="cerrarSesion()" class="button">CERRAR SESIÓN</button>
+                  <button  class="button" *ngIf="this.administrador" (click)="navegarAdminUsuarios()">USUARIOS</button>
                   <!--li><a href="shop.html">Store</a></li>
                   <li class="has-children">
                     <a href="#">Dropdown</a>

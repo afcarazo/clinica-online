@@ -39,6 +39,13 @@ button {
     transform: translateY(-7px);
   }
   
+  .elegir:hover {
+    background-color: #4604df;
+    box-shadow: 0px 15px 20px rgba(78, 156, 245, 0.4);
+    color: #fff;
+    transform: translateY(-7px);
+  }
+  
   button:active {
     transform: translateY(-1px);
   }

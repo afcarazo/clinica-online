@@ -7,13 +7,13 @@
             <div class="wrapper fadeInDown">
                 <div class="card card-4">
                     <div class="card-body">
-                        <h2 style="text-align: center;" class="title">REGISTRAR ESPECIALISTA</h2>
+                        <h2 style="text-align: center;" class="title">REGISTRAR ADMINISTRADOR</h2>
                         <form [formGroup]="formularioRegistro">
                             <div class="row row-space">
                                 <div class="col-2">
                                     <div class="input-group">
                                         <label class="label">Nombre</label>
-                                        <input [(ngModel)]="especialista.nombre" type="text" class="input--style-4"
+                                        <input [(ngModel)]="administrador.nombre" type="text" class="input--style-4"
                                             id="nombre" placeholder="Ingrese nombre" formControlName="nombre">
                                         <small class="invalid" *ngIf="formularioRegistro.controls['nombre'].errors?.['required'] &&
                                         formularioRegistro.controls['nombre'].touched">
@@ -24,7 +24,7 @@
                                 <div class="col-2">
                                     <div class="input-group">
                                         <label class="label">Apellido</label>
-                                        <input [(ngModel)]="especialista.apellido" type="text" class="input--style-4"
+                                        <input [(ngModel)]="administrador.apellido" type="text" class="input--style-4"
                                             id="apellido" placeholder="Ingrese apellido" formControlName="apellido">
                                         <small class="invalid" *ngIf="formularioRegistro.controls['apellido'].errors?.['required'] &&
                                         formularioRegistro.controls['apellido'].touched">
@@ -38,7 +38,7 @@
                                 <div class="col-2">
                                     <div class="input-group">
                                         <label class="label">DNI</label>
-                                        <input [(ngModel)]="especialista.dni" type="number" class="input--style-4"
+                                        <input [(ngModel)]="administrador.dni" type="number" class="input--style-4"
                                             id="dni" placeholder="Ingrese DNI" formControlName="dni">
                                         <small class="invalid" *ngIf="formularioRegistro.controls['dni'].errors?.['required'] &&
                                         formularioRegistro.controls['dni'].touched">
@@ -49,7 +49,7 @@
                                 <div class="col-2">
                                     <div class="input-group">
                                         <label class="label">Edad</label>
-                                        <input [(ngModel)]="especialista.edad" type="number" class="input--style-4"
+                                        <input [(ngModel)]="administrador.edad" type="number" class="input--style-4"
                                             id="edad" placeholder="Ingrese edad" formControlName="edad">
                                         <small class="invalid" *ngIf="formularioRegistro.controls['edad'].errors?.['required'] &&
                                         formularioRegistro.controls['edad'].touched">
@@ -66,7 +66,7 @@
                                 <div class="col-2">
                                     <div class="input-group">
                                         <label class="label">Correo electrónico</label>
-                                        <input [(ngModel)]="especialista.mail" type="text" class="input--style-4"
+                                        <input [(ngModel)]="administrador.mail" type="text" class="input--style-4"
                                             id="email" placeholder="Ingrese correo electrónico" formControlName="email">
                                         <small class="invalid" *ngIf="formularioRegistro.controls['email'].errors?.['required'] &&
                                     formularioRegistro.controls['email'].touched">
@@ -81,7 +81,7 @@
                                 <div class="col-2">
                                     <div class="input-group">
                                         <label class="label">Contraseña</label>
-                                        <input [(ngModel)]="especialista.password" type="password"
+                                        <input [(ngModel)]="administrador.password" type="password"
                                             class="input--style-4" id="clave" placeholder="Ingrese contraseña"
                                             formControlName="clave">
                                         <small class="invalid" *ngIf="formularioRegistro.controls['clave'].errors?.['required'] &&
@@ -93,35 +93,7 @@
                                         </small>
                                     </div>
                                 </div>
-                                <div class="col-9 mb-3">
-                                    <label class="label">Especialidad</label>
-                                    <input [(ngModel)]="especialista.especialidad" type="text" class="input--style-4"
-                                        id="especialidad" placeholder="Ingrese especialidad"
-                                        formControlName="especialidad">
-                                    <small class="invalid" *ngIf="formularioRegistro.controls['especialidad'].errors?.['required'] &&
-                                        formularioRegistro.controls['especialidad'].touched">
-                                        La especialidad es requerida
-                                    </small>
-                                </div>
-                                <div class="col-3">
-                                    <button type="button" class="button-especialidad"
-                                        (click)="agregarEspecialidad()">Agregar
-                                        Especialidad</button>
-                                </div>
-                                <div class="mb-2 col-7">
-                                    <div class="row">
-                                        <div class="col-6" *ngFor="let esp of this.especialidades">
-                                            <button type="button" class="btn-es"
-                                                (click)="cargarEspecialidad(esp)">{{esp.nombre}}</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--div class="col-4 mb-2">
-                                    <p>Especialidades del asignadas:</p><br>
-                                    <ul style="list-style: none;">
-                                        <li *ngFor="let esp of especialidadesAgregar">{{esp.nombre}}</li>
-                                    </ul>
-                                </div-->
+                                
                                 <div class="col-9 mb-3">
                                     <input type="file" formControlName='imagen' (change)="change($event)">
                                     <small class="invalid" *ngIf="formularioRegistro.controls['imagen'].errors?.['required'] &&
