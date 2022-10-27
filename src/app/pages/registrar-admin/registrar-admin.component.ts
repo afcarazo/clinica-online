@@ -24,6 +24,7 @@ export class RegistrarAdminComponent implements OnInit {
   administrador: Administrador;
   formData: FormData;
   fotoUno: any;
+  spinner: boolean = false;
   constructor(public fb: FormBuilder, private firestoreEspecialidad: EspecialidadesService, private imageService: ImageService, private firestore: FirestoreService, private notificacion: NotificationsService, private auth: AuthService) {
     this.administrador = new Administrador();
     this.formularioRegistro = this.fb.group({
@@ -38,19 +39,6 @@ export class RegistrarAdminComponent implements OnInit {
     });
 
     this.formData = new FormData();
-  }
-  validaciones(): boolean {
-    let retorno = true;
-    if (this.administrador.nombre === '' ||
-      this.administrador.mail === '' ||
-      this.administrador.edad === 0 ||
-      this.administrador.apellido === '' ||
-      this.administrador.dni === 0 ||
-      this.administrador.password === '' ||
-      this.administrador.fotoUno === '') {
-      retorno = false;
-    }
-    return retorno;
   }
 
   ngOnInit(): void {
@@ -77,12 +65,13 @@ export class RegistrarAdminComponent implements OnInit {
     console.log(this.fotoUno);
     if (this.fotoUno != undefined) {
       this.fotoUno = Date.now() + this.fotoUno;
-
+      this.spinner = true;
       await this.imageService.subirImagen(this.fotoUno, archive1, this.administrador, 1).catch(error => {
         this.notificacion.showNotificationError('ERROR', 'Ocurrio un error al subir la primer imagen');
         retorno = false;
         console.log(error);
       });
+      this.spinner = false;
 
     }
     else {
@@ -94,23 +83,30 @@ export class RegistrarAdminComponent implements OnInit {
 
   async registrar() {
 
+    this.spinner = true;
     const retorno = await this.subirFoto();
 
     if (retorno) {
-      console.log(this.validaciones());
 
-      if (this.validaciones()) {
+      if (this.formularioRegistro.valid) {
         this.notificacion.showNotificationSuccess('Registrando...', 'aguarde');
 
         await this.auth.registrarAdministrador(this.administrador);
+        this.spinner = false;
         console.log(this.administrador);
         setTimeout(() => {
           this.formularioRegistro.reset();
           this.administrador = new Administrador();
-          }, 4000);
+        }, 4000);
 
       }
+      else { 
+        this.notificacion.showNotificationError('ERROR','Debe completar todos los campos!');
+      }
+      
     }
+    
+    this.spinner = false;
 
   }
 

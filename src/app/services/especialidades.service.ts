@@ -9,11 +9,8 @@ export class EspecialidadesService {
   constructor(private angularFirestore: AngularFirestore) { }
 
   guardarEspecialidad(especialidadGuardar: any) { 
-    
-    let especialidad = {
-      nombre: especialidadGuardar
-    };
-    this.angularFirestore.collection<any>('especialidades').add(especialidad).then((res) => res.id);
+  
+    this.angularFirestore.collection<any>('especialidades').add(especialidadGuardar).then((res) => res.id);
   }
 
 

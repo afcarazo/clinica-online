@@ -23,10 +23,11 @@
             </div>
             <div class="main-nav d-none d-lg-block">
               <nav class="site-navigation text-right text-md-center" role="navigation">
-                <ul class="site-menu js-clone-nav d-none d-lg-block">
+                <ul class="site-menu js-clone-nav d-none d-lg-block" style="  font-weight: bold;">
                   <button *ngIf="!this.activo" (click)="navegarALogin()" class="button">INICIAR SESIÓN</button>
                   <button *ngIf="this.activo" (click)="cerrarSesion()" class="button">CERRAR SESIÓN</button>
                   <button  class="button" *ngIf="this.administrador" (click)="navegarAdminUsuarios()">USUARIOS</button>
+                  <button  class="button"  (click)="navegarSacarTurno()">SACAR-TURNO</button>
                   <!--li><a href="shop.html">Store</a></li>
                   <li class="has-children">
                     <a href="#">Dropdown</a>
@@ -52,9 +53,9 @@
               </nav>
             </div>
             <div class="icons">
-              <a href="login"  class="icon-log">
+              <!--a href="login"  class="icon-log">
                 <i  ><img  src="../../../assets/iconos/user.svg" width="30px"></i> INGRESAR
-              </a>
+              </a-->
             </div>
           </div>
         </div>

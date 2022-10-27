@@ -5,6 +5,7 @@ import {
   Validators,
   FormBuilder
 } from '@angular/forms';
+import { Especialidad } from 'src/app/class/especialidad';
 import { Especialista } from 'src/app/class/especialista';
 import { AuthService } from 'src/app/services/auth.service';
 import { EspecialidadesService } from 'src/app/services/especialidades.service';
@@ -23,6 +24,7 @@ export class RegistrarEspecialistaComponent implements OnInit {
   especialidadesAgregar: any[] = [];
   formData: FormData;
   fotoUno: any;
+  spinner: boolean = false;
   constructor(public fb: FormBuilder, private firestoreEspecialidad: EspecialidadesService, private imageService: ImageService, private firestore: FirestoreService, private notificacion: NotificationsService, private auth: AuthService) {
     this.especialista = new Especialista();
     this.formularioRegistro = this.fb.group({
@@ -30,7 +32,7 @@ export class RegistrarEspecialistaComponent implements OnInit {
       nombre: ['', Validators.required],
       edad: ['', Validators.required],
       apellido: ['', Validators.required],
-      especialidad: ['', Validators.required],
+      especialidad: [''],
       dni: ['', Validators.required],
       clave: ['', [Validators.required, Validators.minLength(6)]],
       imagen: ['', Validators.required]
@@ -44,36 +46,39 @@ export class RegistrarEspecialistaComponent implements OnInit {
     });
     this.formData = new FormData();
   }
-  validaciones(): boolean {
-    let retorno = true;
-    if (this.especialista.nombre === '' ||
-      this.especialista.mail === '' ||
-      this.especialista.edad === 0 ||
-      this.especialista.apellido === '' ||
-      this.especialista.especialidad === '' ||
-      this.especialista.dni === 0 ||
-      this.especialista.password === '' ||
-      this.especialista.fotoUno === '') {
-      retorno = false;
-    }
-    return retorno;
-  }
+
 
   ngOnInit(): void {
 
   }
-  cargarEspecialidad(especialidadAgregar: any) {
+  cargarEspecialidad(especialidadAgregar: Especialidad) {
 
-    this.especialista.especialidad = especialidadAgregar.nombre;
+    let flag = false;
+    for(let especialidad of this.especialidadesAgregar) 
+    {
+      if(especialidadAgregar.nombre == especialidad.nombre)
+      {     
+        flag = true;
+      }
+    }
 
-    this.formularioRegistro.get("especialidad")?.setValue(especialidadAgregar.nombre);
+    if(!flag)
+    {
+      this.especialidadesAgregar.push(especialidadAgregar);
+    }
   }
   agregarEspecialidad() {
-    let especialidadNombre: string = (this.formularioRegistro.get("especialidad")?.value).toLowerCase();
+    let especialidadNombre: any = (this.formularioRegistro.get("especialidad")?.value).toLowerCase();
     if (especialidadNombre != '') {
       let flag: boolean = false;
 
-      this.especialidadesAgregar.push(especialidadNombre);
+      let especialidadCompleta: Especialidad ={
+        nombre: especialidadNombre,
+        foto: "https://firebasestorage.googleapis.com/v0/b/clinica-online-7c11f.appspot.com/o/icono.png?alt=media&token=d0bcc7f1-e8c4-4c78-a879-ab6c7204f201"
+
+      }
+
+      this.especialidadesAgregar.push(especialidadCompleta);
 
       for (let especialidad of this.especialidades) {
         if (especialidad.nombre == especialidadNombre) {
@@ -82,7 +87,7 @@ export class RegistrarEspecialistaComponent implements OnInit {
       }
 
       if (!flag) {
-        this.firestoreEspecialidad.guardarEspecialidad(especialidadNombre);
+        this.firestoreEspecialidad.guardarEspecialidad(especialidadCompleta);
         this.formularioRegistro.get("especialidad")?.setValue('');
       }
     }
@@ -107,12 +112,14 @@ export class RegistrarEspecialistaComponent implements OnInit {
     console.log(this.fotoUno);
     if (this.fotoUno != undefined) {
       this.fotoUno = Date.now() + this.fotoUno;
-
+      this.spinner = true;
       await this.imageService.subirImagen(this.fotoUno, archive1, this.especialista, 1).catch(error => {
         this.notificacion.showNotificationError('ERROR', 'Ocurrio un error al subir la primer imagen');
+              this.spinner = false;
         retorno = false;
         console.log(error);
       });
+      this.spinner = false;
 
     }
     else {
@@ -124,22 +131,27 @@ export class RegistrarEspecialistaComponent implements OnInit {
 
   async registrar() {
 
+    this.spinner = true;
     const retorno = await this.subirFoto();
 
     if (retorno) {
-      console.log(this.validaciones());
-
-      if (this.validaciones()) {
+      this.especialista.especialidad = this.especialidadesAgregar;
+      if (this.formularioRegistro.valid) {
         this.notificacion.showNotificationSuccess('Registrando...', 'aguarde');
 
+        console.log('ESPECIALISTA', this.especialista);
         await this.auth.registrarEspecialista(this.especialista);
-        console.log(this.especialista);
+        this.spinner = false;
         setTimeout(() => {
           this.formularioRegistro.reset();
           this.especialista = new Especialista();
-          }, 4000);
+          this.especialidadesAgregar = [];
+        }, 4000);
 
+      } else { 
+        this.notificacion.showNotificationError('ERROR','Debe completar todos los campos');
       }
+      this.spinner=false;
     }
 
   }

@@ -19,6 +19,7 @@ export class SeccionUsuariosComponent implements OnInit {
         this.listadoUsuarios = usuarios;
       }
     })
+   
   }
   navegarARegistroPaciente()
   {

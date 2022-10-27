@@ -27,6 +27,9 @@ export class NavBarComponent implements OnInit {
   navegarAdminUsuarios() { 
     this.router.navigateByUrl('usuarios');
   }
+  navegarSacarTurno() { 
+    this.router.navigateByUrl('sacar-turno');
+  }
 
   cerrarSesion() {
     this.activo = this.auth.sesionActiva;

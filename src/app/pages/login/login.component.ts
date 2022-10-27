@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
   formularioLogin: FormGroup;
   listadoUsuarioAccesoRapido: any[] = [];
   ingresoRapido: boolean = false;
+  spinner: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -56,17 +57,21 @@ export class LoginComponent implements OnInit {
   async login() {
     try {
       if (this.user.email != '' && this.user.password != '') {
+        this.spinner = true;
         await this.authService.login(this.user.email, this.user.password).then((data) => {
           let aprobado = this.authService.usuarioActual.aprobado;
           console.log('APROBADO', aprobado);
           if (data?.user?.emailVerified) {
             if (aprobado || this.authService.usuarioActual.perfil == 'paciente') {
+              this.spinner = false;
               this.notificacionesService.showNotificationSuccess('Login exitoso!', 'Redirigiendo a home!');
               setTimeout(() => { this.router.navigateByUrl('', { replaceUrl: true }); }, 2000);
             }
             if (!aprobado && this.authService.usuarioActual.perfil == 'especialista') {
+              this.spinner = false;
               this.notificacionesService.showNotificationError('ERROR!', 'Primero deberia ser aprobado por un administrador!');
               this.authService.logout();
+              
             }
           }
           else {
@@ -87,10 +92,13 @@ export class LoginComponent implements OnInit {
   async loginRapido() {
 
     if (this.user.email != '' && this.user.password != '') {
+      this.spinner = true;
       await this.authService.login(this.user.email, this.user.password).then((data) => {
+        this.spinner = false;
         this.notificacionesService.showNotificationSuccess('Login exitoso!', 'Redirigiendo a home!');
         setTimeout(() => { this.router.navigateByUrl('', { replaceUrl: true }); }, 2000);
       }).catch(error => { 
+        this.spinner = false;
         this.notificacionesService.showNotificationError('ERROR',error);
       })
     }

@@ -22,6 +22,7 @@ export class RegistrarPacienteComponent implements OnInit {
   paciente: Paciente;
   fotoUno: any;
   fotoDos: any;
+  spinner: boolean = false;
   formData: FormData;
   constructor(public fb: FormBuilder, private imageService: ImageService, private firestore: FirestoreService, private auth: AuthService, private notificacion: NotificationsService) {
     this.paciente = new Paciente();
@@ -39,21 +40,7 @@ export class RegistrarPacienteComponent implements OnInit {
   }
 
 
-  validaciones(): boolean {
-    let retorno = true;
-    if (this.paciente.nombre === '' ||
-      this.paciente.mail === '' ||
-      this.paciente.edad === 0 ||
-      this.paciente.apellido === '' ||
-      this.paciente.dni === 0 ||
-      this.paciente.password === '' ||
-      this.paciente.fotoUno === '' ||
-      this.paciente.fotoDos === '' ||
-      this.paciente.obraSocial === '') {
-      retorno = false;
-    }
-    return retorno;
-  }
+ 
 
   ngOnInit(): void {
 
@@ -85,7 +72,7 @@ export class RegistrarPacienteComponent implements OnInit {
     if (this.fotoUno != undefined && this.fotoDos != undefined) {
       this.fotoUno = Date.now() + this.fotoUno;
       this.fotoDos = Date.now() + this.fotoDos;
-
+      this.spinner = true;
       await this.imageService.subirImagen(this.fotoUno, archive1, this.paciente, 1).catch(error => {
         this.notificacion.showNotificationError('ERROR', 'Ocurrio un error al subir la primer imagen');
         retorno = false;
@@ -96,9 +83,11 @@ export class RegistrarPacienteComponent implements OnInit {
         console.log(error);
         retorno = false;
       });
+      this.spinner = false;
 
     }
     else {
+      retorno = false;
       this.notificacion.showNotificationError('ERROR', 'Son requeridas dos fotos.');
     }
     return retorno;
@@ -107,15 +96,21 @@ export class RegistrarPacienteComponent implements OnInit {
   async registrar() {
     const retorno = await this.subirFoto();
     if (retorno) {
-      if (this.validaciones()) {
-        this.notificacion.showNotificationSuccess('Registrando...','aguarde');
+      if (this.formularioRegistro.valid) {
+        this.spinner = true;
+        this.notificacion.showNotificationSuccess('Registrando...', 'aguarde');
         await this.auth.registerPaciente(this.paciente);
         setTimeout(() => {
           this.formularioRegistro.reset();
           this.paciente = new Paciente();
-          }, 4000);
+        }, 4000);
+      
+      } else { 
+        this.spinner = false;
+        this.notificacion.showNotificationError('ERROR','Debe completar todos los campos!');
       }
     }
+    this.spinner = false;
   }
 
 

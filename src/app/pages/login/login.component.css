@@ -199,6 +199,7 @@ input[type="button"].btn-block {
   background: #55a7f3;
   color: #67b6ff(255, 255, 255);
 }
+
 .card:hover {
   border: 1px solid #8a98d4;
   color: #337fc5(255, 255, 255);
@@ -208,12 +209,13 @@ input[type="button"].btn-block {
   box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.61);
 }
 
-.card-paciente:hover{
+.card-paciente:hover {
   background: #ff0000;
   -webkit-box-shadow: 0px 10px 34px -15px rgba(255, 0, 0, 0.582);
   -moz-box-shadow: 0px 10px 34px -15px rgba(255, 0, 0, 0.603);
   box-shadow: 0px 10px 34px -15px rgba(243, 0, 0, 0.61);
 }
+
 .card-especialista {
   background: #001aff;
 }
@@ -260,6 +262,7 @@ input[type="button"].btn-block {
     -webkit-transform: translate3d(0, -100%, 0);
     transform: translate3d(0, -100%, 0);
   }
+
   100% {
     opacity: 1;
     -webkit-transform: none;
@@ -273,9 +276,48 @@ input[type="button"].btn-block {
     -webkit-transform: translate3d(0, -100%, 0);
     transform: translate3d(0, -100%, 0);
   }
+
   100% {
     opacity: 1;
     -webkit-transform: none;
     transform: none;
+  }
+}
+
+
+/*SPINNER*/
+.spinner {
+  position: absolute;
+  margin-left: 50%;
+  margin-top: 25%;
+  z-index: 101;
+
+  width: 56px;
+  height: 56px;
+  display: grid;
+  border: 4px solid #0000;
+  border-radius: 50%;
+  border-right-color: #004dff;
+  animation: spinner-a4dj62 1s infinite linear;
+}
+
+.spinner::before,
+.spinner::after {
+  content: "";
+  grid-area: 1/1;
+  margin: 2px;
+  border: inherit;
+  border-radius: 50%;
+  animation: spinner-a4dj62 2s infinite;
+}
+
+.spinner::after {
+  margin: 8px;
+  animation-duration: 3s;
+}
+
+@keyframes spinner-a4dj62 {
+  100% {
+    transform: rotate(1turn);
   }
 }

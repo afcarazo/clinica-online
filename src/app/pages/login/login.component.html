@@ -1,6 +1,7 @@
 <app-nav-bar></app-nav-bar>
-
+<div *ngIf="this.spinner" class="spinner"></div>
 <body style="margin-top: 50px; margin-bottom: 5%;">
+
 	<div class="wrapper fadeInDown">
 	<section class="ftco-section">
 		<div class="container">
@@ -20,7 +21,7 @@
 									
 								<div class="d-flex">
 									<div class="row " style=" width: 20%; margin-top: 5%;" *ngIf="this.ingresoRapido"  >   <!--style=" width: 10%;"-->         
-										<div  style="width: 100px; height: 75px; border-color: rgba(255, 255, 255, 0.925); background-color: rgba(192, 221, 247, 0.61); cursor: pointer;"
+										<div  style="width: 100px; height: 75px; border-color: rgba(255, 255, 255, 0.925); background-color: rgb(255, 255, 255); cursor: pointer;"
 										*ngFor='let usuario of listadoUsuarioAccesoRapido'>
 											<div class="card" (click)='this.cargarPerfil(usuario)'>
 												<img class="card-img-top" src="{{usuario.fotoUno}}" width="60px" height="75px"  *ngIf="usuario.perfil != 'paciente'">

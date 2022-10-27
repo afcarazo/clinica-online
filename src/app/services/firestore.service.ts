@@ -15,5 +15,13 @@ export class FirestoreService {
     const collection = this.angularFirestore.collection<any>('usuarios',ref => ref.where('acceso-rapido', '==', true))
     return collection.valueChanges();
   }
+  traerListadoAEspecialistas() {
+    const collection = this.angularFirestore.collection<any>('usuarios',ref => ref.where('perfil', '==', 'especialista'))
+    return collection.valueChanges();
+  }
+  traerListadoEspecilidades() {
+    const collection = this.angularFirestore.collection<any>('especialidades');
+    return collection.valueChanges();
+  }
 
 }

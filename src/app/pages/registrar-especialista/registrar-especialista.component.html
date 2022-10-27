@@ -1,5 +1,5 @@
 <app-nav-bar></app-nav-bar>
-
+<div *ngIf="this.spinner" class="spinner"></div>
 <body>
 
     <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
@@ -116,12 +116,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--div class="col-4 mb-2">
+                                <div class="col-4 mb-2">
                                     <p>Especialidades del asignadas:</p><br>
                                     <ul style="list-style: none;">
                                         <li *ngFor="let esp of especialidadesAgregar">{{esp.nombre}}</li>
                                     </ul>
-                                </div-->
+                                </div>
                                 <div class="col-9 mb-3">
                                     <input type="file" formControlName='imagen' (change)="change($event)">
                                     <small class="invalid" *ngIf="formularioRegistro.controls['imagen'].errors?.['required'] &&

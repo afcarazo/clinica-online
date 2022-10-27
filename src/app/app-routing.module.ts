@@ -7,6 +7,7 @@ import { PacienteEspecilistaComponent } from './pages/paciente-especilista/pacie
 import { RegistrarAdminComponent } from './pages/registrar-admin/registrar-admin.component';
 import { RegistrarEspecialistaComponent } from './pages/registrar-especialista/registrar-especialista.component';
 import { RegistrarPacienteComponent } from './pages/registrar-paciente/registrar-paciente.component';
+import { SacarTurnoComponent } from './pages/sacar-turno/sacar-turno.component';
 import { SeccionUsuariosComponent } from './pages/seccion-usuarios/seccion-usuarios.component';
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'usuarios', component: SeccionUsuariosComponent, canActivate:[AdministradorGuard] },
   { path: 'registrar-administrador', component: RegistrarAdminComponent },
   { path: 'registrar', component: PacienteEspecilistaComponent },
+  { path: 'sacar-turno', component: SacarTurnoComponent },
   {path:'login', component:LoginComponent}];
 
 @NgModule({

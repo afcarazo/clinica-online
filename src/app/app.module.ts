@@ -20,6 +20,7 @@ import { RegistrarEspecialistaComponent } from './pages/registrar-especialista/r
 import { SeccionUsuariosComponent } from './pages/seccion-usuarios/seccion-usuarios.component';
 import { RegistrarAdminComponent } from './pages/registrar-admin/registrar-admin.component';
 import { PacienteEspecilistaComponent } from './pages/paciente-especilista/paciente-especilista.component';
+import { SacarTurnoComponent } from './pages/sacar-turno/sacar-turno.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { PacienteEspecilistaComponent } from './pages/paciente-especilista/pacie
     RegistrarEspecialistaComponent,
     SeccionUsuariosComponent,
     RegistrarAdminComponent,
-    PacienteEspecilistaComponent
+    PacienteEspecilistaComponent,
+    SacarTurnoComponent
   ],
   imports: [
     BrowserModule,

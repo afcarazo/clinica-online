@@ -80,6 +80,7 @@ export class AuthService {
           await this.firestore.collection('usuarios').doc(data.user?.uid).set(
             {
               nombre: especialista.nombre,
+              especialidades:especialista.especialidad,
               apellido: especialista.apellido,
               edad: especialista.edad,
               dni: especialista.dni,
