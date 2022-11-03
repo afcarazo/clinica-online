@@ -7,14 +7,17 @@ Podes ver el funcionamiento en: https://clinica-online-7c11f.web.app/
 Aquí podrá acceder al login mediante el botón "Iniciar sesión", en dicha sección podrá registrarse o ingresar a la página mediante los diferentes accesos rápidos que se aprecian a la izquierda.
 
 ![Alt text](./src/assets/gif/1.gif?raw=true)
+#
+## Secciones
 
-## Code scaffolding
+### Sacar turno
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+En esta sección se accede desde la barra superior y sólo podrán acceder los administradores o pacientes.
 
-## Build
+Aquí podrás sacar un turno de manera muy sencilla siguiendo los siguientes pasos:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+![Alt text](./src/assets/gif/2.gif?raw=true)
+
 
 ## Running unit tests
 
