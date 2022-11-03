@@ -1,10 +1,12 @@
-# ClinicaOnline
+# Clinica online
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+Podes ver el funcionamiento en: https://clinica-online-7c11f.web.app/
 
-## Development server
+## Al ingresar vas a encontrarte con la bienvenida: 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Aquí podrá acceder al login mediante el botón "Iniciar sesión", en dicha sección podrá registrarse o ingresar a la página mediante los diferentes accesos rápidos que se aprecian a la izquierda.
+
+![Alt text](./src/assets/gif/1.gif?raw=true)
 
 ## Code scaffolding
 
