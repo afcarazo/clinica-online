@@ -18,10 +18,15 @@ Aquí podrás sacar un turno de manera muy sencilla siguiendo los siguientes pas
 
 ![Alt text](./src/assets/gif/2.gif?raw=true)
 
+Si ingresa como administrador primero debera seleccionar un paciente.
 
-## Running unit tests
+## Perfil
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Para acceder a su perfil debera hacer click en la parte superior derecha dónde visualizará su nombre y apellido.
+
+En esta sección podra acceder a su información y a sus turnos. Si ingreso como administrador se encontrara con todos los turnos de la clinica dónde podrá aceptarlos, rechazarlos, cancelarlos, y demás acciones como dejar una reseña, completar una encuesta. Dependiendo el perfil tendrá acceso a más o menos opciones.
+
+![Alt text](./src/assets/gif/3.gif?raw=true)
 
 ## Running end-to-end tests
 
