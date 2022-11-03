@@ -28,10 +28,11 @@ En esta sección podra acceder a su información y a sus turnos. Si ingreso como
 
 ![Alt text](./src/assets/gif/3.gif?raw=true)
 
-## Running end-to-end tests
+## Usuarios
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+A esta sección sólo podrán ingresar administradores. Para acceder a dicha sección hacer click en la barra superior dónde se visualiza la palabra "usuarios".
+Aquí podrás apreciar un listado de todos los pacientes, administradores y especialistas registrados, además podrá dar de alta uno. También podrá habilitar/deshabilitar especialistas.
 
-## Further help
+![Alt text](./src/assets/gif/4.gif?raw=true)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
