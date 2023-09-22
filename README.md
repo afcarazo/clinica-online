@@ -1,27 +1,38 @@
-# ClinicaOnline
+# Clinica online
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+Podes ver el funcionamiento en: https://clinica-online-7c11f.web.app/
 
-## Development server
+## Al ingresar vas a encontrarte con la bienvenida: 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Aquí podrá acceder al login mediante el botón "Iniciar sesión", en dicha sección podrá registrarse o ingresar a la página mediante los diferentes accesos rápidos que se aprecian a la izquierda.
 
-## Code scaffolding
+![Alt text](./src/assets/gif/1.gif?raw=true)
+#
+## Secciones
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Sacar turno
 
-## Build
+En esta sección se accede desde la barra superior y sólo podrán acceder los administradores o pacientes.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Aquí podrás sacar un turno de manera muy sencilla siguiendo los siguientes pasos:
 
-## Running unit tests
+![Alt text](./src/assets/gif/2.gif?raw=true)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Si ingresa como administrador primero debera seleccionar un paciente.
 
-## Running end-to-end tests
+## Perfil
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Para acceder a su perfil debera hacer click en la parte superior derecha dónde visualizará su nombre y apellido.
 
-## Further help
+En esta sección podra acceder a su información y a sus turnos. Si ingreso como administrador se encontrara con todos los turnos de la clinica dónde podrá aceptarlos, rechazarlos, cancelarlos, y demás acciones como dejar una reseña, completar una encuesta. Dependiendo el perfil tendrá acceso a más o menos opciones.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+![Alt text](./src/assets/gif/3.gif?raw=true)
+
+## Usuarios
+
+A esta sección sólo podrán ingresar administradores. Para acceder a dicha sección hacer click en la barra superior dónde se visualiza la palabra "usuarios".
+Aquí podrás apreciar un listado de todos los pacientes, administradores y especialistas registrados, además podrá dar de alta uno. También podrá habilitar/deshabilitar especialistas.
+
+![Alt text](./src/assets/gif/4.gif?raw=true)
+
+
