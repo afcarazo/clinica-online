@@ -1,0 +1,160 @@
+<app-nav-bar></app-nav-bar>
+<div *ngIf="this.spinner" class="spinner"></div>
+
+<body>
+
+    <!--div class="wrapper" *ngIf="!this.spinner"style="text-align: center;">
+    <div class="slider" id="slider" style="text-align: center;">
+        <ul class="slides">
+            <li class="slide" id="slide1">
+                <div style="height: 500px; width: 500px; text-align: center;"style="text-align: center;"> 
+                    <canvas  id="graficoPorEspecialidad"></canvas>
+                </div>
+            </li>
+            <li class="slide" id="slide2" style="text-align: center;">
+                <div style="height: 500px; width: 500px; text-align: center;"> 
+                <canvas id="graficoPorDias"></canvas>
+                </div>
+            </li>
+            <li class="slide" id="slide3" style="text-align: center;">
+                <div style="height: 500px; width: 500px;text-align: center;"> 
+                <canvas id="graficoTurnoSolicitadoMedico"></canvas>
+                </div>
+            </li>
+            <li class="slide" id="slide5"style="text-align: center;">
+                <div style="height: 500px; width: 500px;text-align: center;"> 
+                <canvas id="graficoTurnoFinalizadoMedico"></canvas>
+                </div>
+            </li>
+            <li class="slide" id="slide5">
+                <a href="#">
+                    <p class="caption">Texto llamativo</p>
+                    <img src="../../../assets/doctor.png" alt="photo 5" height="auto">
+                </a>
+            </li>
+            <li class="slide">
+                <a href="#">
+                    <p class="caption">Texto llamativo</p>
+                    <img src="../../../assets/doctor.png" alt="photo 1" height="auto">
+                </a>
+            </li>
+        </ul>
+        <ul class="slider-controler">
+            <li><a href="#slide1">&bullet;</a></li>
+            <li><a href="#slide2">&bullet;</a></li>
+            <li><a href="#slide3">&bullet;</a></li>
+            <li><a href="#slide4">&bullet;</a></li>
+        </ul>
+    </div>
+</div>
+<div class="mt-4 col-12 text-center blur"  style="background-color: rgba(252, 252, 252, 0.589); border-radius: 2px;">
+    <div class="row mt-2 mb-2">
+        <div class="col-3 mt-1" *ngFor="let log of this.logs" style="border-style: solid; border-color: rgba(252, 252, 252, 0.548);">
+            <p class="fs-5 mt-2">
+            <b>Usuario:</b> {{log.usuario.nombre}} {{log.usuario.apellido}}
+            </p>    
+            <p class="fs-5">
+            <b>Dia:</b> {{log.dia}}
+            </p>
+            <p class="fs-5">
+                <b>Hora:</b> {{log.hora}}
+            </p>
+        </div>
+        <div class="col-12 mt-2">
+            <button class="btn btn-dark" (click)="this.generarExcel()">Generar Excel</button>
+        </div>
+</div>        
+</div-->
+
+    <div id="slider" *ngIf="!this.spinner">
+        <input type="radio" id="show_slide1" name="slider_commands">
+        <input type="radio" id="show_slide2" name="slider_commands">
+        <input type="radio" id="show_slide3" name="slider_commands">
+        <input type="radio" id="show_slide4" name="slider_commands">
+        <input type="radio" id="play_slider" name="slider_commands">
+
+        <div id="slides">
+            <figure id="slide1">
+                <h1> Gráfico por especialidad</h1>
+                <div style="height: 500px; width: 500px; text-align: center;  margin-bottom: 10%;"
+                    style="text-align: center;">
+                    <canvas id="graficoPorEspecialidad"></canvas>
+                </div>
+                <div style="text-align: center; margin-bottom:5%; margin-top:2%">
+                    <button type="submit" class="btn-enviar" (click)="imprimirPdf('graficoPorEspecialidad')">Generar
+                        PDF</button>
+                </div>
+            </figure>
+
+            <figure id="slide2">
+                <h1> Gráfico de días</h1>
+                <div style="height: 500px; width: 500px; text-align: center; margin-bottom: 10%;"
+                    style="text-align: center;">
+                    <canvas id="graficoPorDias"></canvas>
+                </div>
+                <div style="text-align: center; margin-bottom:5%; margin-top:2%">
+                    <button type="submit" class="btn-enviar" (click)="imprimirPdf('graficoPorDias')">Generar
+                        PDF</button>
+                </div>
+            </figure>
+            <figure id="slide3">
+                <h1> Gráfico turnos solicitados</h1>
+                <div style="height: 500px; width: 500px; text-align: center;  margin-bottom: 10%;"
+                    style="text-align: center;">
+                    <canvas id="graficoTurnoSolicitadoMedico"></canvas>
+                </div>
+                <div style="text-align: center; margin-bottom:5%; margin-top:2%">
+                    <button type="submit" class="btn-enviar"
+                        (click)="imprimirPdf('graficoTurnoSolicitadoMedico')">Generar PDF</button>
+                </div>
+            </figure>
+            <figure id="slide4">
+                <h1> Gráfico turnos finalizados</h1>
+                <div style="height: 500px; width: 500px; text-align: center; margin-bottom: 10%;"
+                    style="text-align: center;">
+                    <canvas id="graficoTurnoFinalizadoMedico"></canvas>
+                </div>
+                <div style="text-align: center; margin-bottom:5%; margin-top:2%">
+                    <button type="submit" (click)="imprimirPdf('graficoTurnoFinalizadoMedico')"
+                        class="btn-enviar">Generar PDF</button>
+                </div>
+
+            </figure>
+        </div>
+        <nav>
+            <ul class="dots_commands">
+                <li><label for="show_slide1">Slide 1</label></li>
+                <li><label for="show_slide2">Slide 2</label></li>
+                <li><label for="show_slide3">Slide 3</label></li>
+                <li><label for="show_slide4">Slide 4</label></li>
+            </ul>
+        </nav>
+    </div>
+<div style="background-color: rgba(255, 255, 255, 0.589);" *ngIf="!this.spinner">
+    <h1>Logs</h1>
+   
+    <div *ngIf="this.mostrarLogs" class="mt-4 col-12 text-center blur"
+        style="background-color: rgba(252, 252, 252, 0.836); border-radius: 2px;">
+        <div class="row mt-2 mb-2">
+            <div  appCardUsuario class="col-3 mt-1" *ngFor="let log of this.logs"
+                style="border-style: solid; border-color: rgba(252, 252, 252, 0.719);">
+                <p class="fs-5 mt-2">
+                    <b>Usuario:</b> {{log.usuario}}
+                </p>
+                <p class="fs-5">
+                    <b>Dia:</b> {{log.dia}}
+                </p>
+                <p class="fs-5">
+                    <b>Hora:</b> {{log.hora}}
+                </p>
+            </div>
+            <div class="col-12 mt-2">
+                <button class="btn-res" (click)="this.generarExcel()">Descargar excel</button>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center; ">
+    <button (click)="this.mostrarLogs=!this.mostrarLogs" type="submit" class="btn-enviar" >Mostrar logs</button>
+</div>
+</div>
+</body>

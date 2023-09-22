@@ -24,6 +24,7 @@ export class RegistrarPacienteComponent implements OnInit {
   fotoDos: any;
   spinner: boolean = false;
   formData: FormData;
+  numeroRandom: any;
   constructor(public fb: FormBuilder, private imageService: ImageService, private firestore: FirestoreService, private auth: AuthService, private notificacion: NotificationsService) {
     this.paciente = new Paciente();
     this.formularioRegistro = this.fb.group({
@@ -34,13 +35,16 @@ export class RegistrarPacienteComponent implements OnInit {
       obraSocial: ['', Validators.required],
       dni: ['', Validators.required],
       clave: ['', [Validators.required, Validators.minLength(6)]],
-      imagen: ['', Validators.required]
+      imagen: ['', Validators.required],
+      capcha: ['', [Validators.required]],
     });
     this.formData = new FormData();
+    this.numeroRandom = Math.floor(Math.random() * (500 - 100)) + 100;
+
   }
 
 
- 
+
 
   ngOnInit(): void {
 
@@ -94,21 +98,27 @@ export class RegistrarPacienteComponent implements OnInit {
 
   }
   async registrar() {
-    const retorno = await this.subirFoto();
-    if (retorno) {
-      if (this.formularioRegistro.valid) {
-        this.spinner = true;
-        this.notificacion.showNotificationSuccess('Registrando...', 'aguarde');
-        await this.auth.registerPaciente(this.paciente);
-        setTimeout(() => {
-          this.formularioRegistro.reset();
-          this.paciente = new Paciente();
-        }, 4000);
-      
-      } else { 
-        this.spinner = false;
-        this.notificacion.showNotificationError('ERROR','Debe completar todos los campos!');
+    let capcha = this.formularioRegistro.get("capcha")?.value;
+    if (capcha == this.numeroRandom) {
+      const retorno = await this.subirFoto();
+      if (retorno) {
+        if (this.formularioRegistro.valid) {
+          this.spinner = true;
+          this.notificacion.showNotificationSuccess('Registrando...', 'aguarde');
+          await this.auth.registerPaciente(this.paciente);
+          setTimeout(() => {
+            this.formularioRegistro.reset();
+            this.paciente = new Paciente();
+          }, 4000);
+
+        } else {
+          this.spinner = false;
+          this.notificacion.showNotificationError('ERROR', 'Debe completar todos los campos!');
+        }
       }
+    }
+    else { 
+      this.notificacion.showNotificationError('ERROR', 'El captcha no coincide!');
     }
     this.spinner = false;
   }

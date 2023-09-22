@@ -656,6 +656,7 @@
     /* ANIMATIONS */
   
   /* Simple CSS3 Fade-in-down Animation */
+ 
   .fadeInDown {
       -webkit-animation-name: fadeInDown;
       animation-name: fadeInDown;
@@ -664,7 +665,8 @@
       -webkit-animation-fill-mode: both;
       animation-fill-mode: both;
     }
-    
+   
+ 
     @-webkit-keyframes fadeInDown {
       0% {
         opacity: 0;
@@ -807,5 +809,129 @@
 @keyframes spinner-a4dj62 {
   100% {
     transform: rotate(1turn);
+  }
+}
+
+.input--style-4-inp {
+  line-height: 50px;
+  background: #fafafa;
+  -webkit-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  -moz-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  padding: 0 10px;
+  font-size: 16px;
+  color: #666;
+  -webkit-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+  text-align: center;
+  width: 100%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+
+.input--style-4-inp-x {
+  line-height: 50px;
+  background: #fafafa;
+  -webkit-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  -moz-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  padding: 0 10px;
+  font-size: 16px;
+  color: #666;
+  -webkit-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+  text-align: center;
+  width: 50%;
+  margin-left: 10%;
+  margin-right: 10%;
+  background-image: url(../../../assets/x.png);
+  background-repeat: no-repeat;
+}
+.input--style-4-inp-y {
+  line-height: 50px;
+  background: #fafafa;
+  -webkit-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  -moz-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  padding: 0 10px;
+  font-size: 16px;
+  color: #666;
+  -webkit-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+  text-align: center;
+  width: 50%;
+  margin-left: 10%;
+  margin-right: 10%;
+  background-image: url(../../../assets/y.png);
+  background-repeat: no-repeat;
+}
+
+.input--style-4-inp-x-cap {
+  line-height: 50px;
+  background: #fafafa;
+  -webkit-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  -moz-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  padding: 0 10px;
+  font-size: 16px;
+  color: #666;
+  -webkit-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+  text-align: center;
+  width:80px;
+  font: normal  Impact, Charcoal, arial, sans-serif;
+	font-style: italic;
+  font-weight: bold;
+	
+}
+
+
+
+.fadeinUp {
+  -webkit-animation: fadeInUp 500ms ease-in-out; /* Chrome, Safari, Opera */
+  animation: fadeInUp 500ms ease-in-out;
+}
+/* Standard syntax */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+  
+@-webkit-keyframes fadeInUp {
+  0% {
+      opacity: 0;
+      -webkit-transform: translateY(40px);
+  }
+  100% {
+      opacity: 1;
+      -webkit-transform: translateY(0);
   }
 }

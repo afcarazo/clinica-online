@@ -24,10 +24,12 @@
             <div class="main-nav d-none d-lg-block">
               <nav class="site-navigation text-right text-md-center" role="navigation">
                 <ul class="site-menu js-clone-nav d-none d-lg-block" style="  font-weight: bold;">
-                  <button *ngIf="!this.activo" (click)="navegarALogin()" class="button">INICIAR SESIÓN</button>
                   <button *ngIf="this.activo" (click)="cerrarSesion()" class="button">CERRAR SESIÓN</button>
                   <button  class="button" *ngIf="this.administrador" (click)="navegarAdminUsuarios()">USUARIOS</button>
-                  <button  class="button"  (click)="navegarSacarTurno()">SACAR-TURNO</button>
+                  <button  *ngIf="this.paciente || this.administrador"  class="button"  (click)="navegarSacarTurno()">SACAR-TURNO</button>
+                  <button  *ngIf="this.administrador"   class="button"  (click)="navegarGraficos()">ESTADISTICAS</button>
+                  <button  *ngIf="this.especialista"  class="button"  (click)="navegarSeccionPaciente()">PACIENTES</button>
+                  
                   <!--li><a href="shop.html">Store</a></li>
                   <li class="has-children">
                     <a href="#">Dropdown</a>
@@ -49,14 +51,23 @@
                   </li>
                   <li><a href="about.html">About</a></li>
                   <li><a href="contact.html">Contact</a></li-->
+               
                 </ul>
+             
               </nav>
             </div>
+        
             <div class="icons">
               <!--a href="login"  class="icon-log">
                 <i  ><img  src="../../../assets/iconos/user.svg" width="30px"></i> INGRESAR
               </a-->
             </div>
+            <div>
+            <button  style="float:right; display:block" *ngIf="this.activo"  class="btn" [routerLink] = "['/perfil-seccion']">
+              {{this.auth.usuarioActual.nombre}} {{this.auth.usuarioActual.apellido}}
+             </button>
+            </div>
           </div>
+          
         </div>
       </div>

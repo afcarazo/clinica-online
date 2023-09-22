@@ -11,16 +11,19 @@ import { User } from '../class/user';
 import { Paciente } from '../class/paciente';
 import { Especialista } from '../class/especialista';
 import { Administrador } from '../class/administrador';
+import { FechaPipe } from '../pipes/fecha.pipe';
+import { FormatoNombreApellidoPipe } from '../pipes/formato-nombre-apellido.pipe';
+import { FirestoreService } from './firestore.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   public user: any;
-  sesionActiva: any = false;
+  public sesionActiva: any = false;
   uid: any;
   usuarioActual: any;
-  constructor(private auth: AngularFireAuth, private notification: NotificationsService, private datepipe: DatePipe, private router: Router, private firestore: AngularFirestore) {
+  constructor(private auth: AngularFireAuth, private notification: NotificationsService, private datepipe: DatePipe, private router: Router, private firestore: AngularFirestore, private fecha: FechaPipe, private nombreApellido:FormatoNombreApellidoPipe, private firestoreService:FirestoreService) {
     auth.authState.subscribe(user => (this.sesionActiva = user));
   }
 
@@ -48,6 +51,7 @@ export class AuthService {
               fotoUno: paciente.fotoUno,
               fotoDos: paciente.fotoDos,
               perfil: 'paciente',
+              historiasClinicas: [],
               uid: data.user?.uid
             }).then(() => {
               this.notification.showNotificationSuccess('Se registro con exito', 'Verifique su correo.');
@@ -80,7 +84,7 @@ export class AuthService {
           await this.firestore.collection('usuarios').doc(data.user?.uid).set(
             {
               nombre: especialista.nombre,
-              especialidades:especialista.especialidad,
+              especialidades: especialista.especialidad,
               apellido: especialista.apellido,
               edad: especialista.edad,
               dni: especialista.dni,
@@ -154,6 +158,7 @@ export class AuthService {
   async login(email: any, password: any) {
     var retorno: any;
     await this.auth.signInWithEmailAndPassword(email, password).then(async (ret) => {
+      
       this.uid = ret.user?.uid
       retorno = ret;
       if (ret) {
@@ -168,28 +173,30 @@ export class AuthService {
               .collection('usuarios')
               .doc(this.uid)
               .valueChanges()
-              .subscribe((usuario) => {
+              .subscribe(async (usuario) => {
                 this.usuarioActual = usuario;
-                console.log(this.usuarioActual);
-              });
+                        
+              })
+             
           })
+      
       }
       else {
         retorno = null;
       }
-    }).catch((error) => { 
-      this.notification.showNotificationError('ERROR',error);
-    } )
-    
+    }).catch((error) => {
+      this.notification.showNotificationError('ERROR', error);
+    })
+
 
     return retorno;
-  
+
   }
 
   async logout() {
     await this.auth.signOut();
   }
-   isLogin(user: any) {
+  isLogin(user: any) {
 
     try {
       return this.auth.onAuthStateChanged(user);
@@ -246,4 +253,34 @@ export class AuthService {
     })
   }
 
+
+  async agregarLogin(user: any) {
+    console.log('entre agrego a ', user);
+    if (user) {
+      let array: any = [];
+      let fechaActual: Date = new Date();
+      let hora: any;
+      let arrayHora: any;
+
+      console.log('ESTO DEVUELVE', fechaActual);
+      array.push(this.fecha.cambiarDia(fechaActual.toString().split(' ')[0]) + ' ' +
+        fechaActual.toString().split(' ')[2] + '/' +
+        this.fecha.cambiarMes(fechaActual.toString().split(' ')[1]) + '/' +
+        fechaActual.toString().split(' ')[3]);
+      hora = fechaActual.toString().split(' ')[4];
+      arrayHora = hora.split(":");
+
+      let nombreApellido = this.nombreApellido.transform(user.nombre, user.apellido);
+
+
+      var login =
+      {
+        usuario: nombreApellido,
+        dia: array[0],
+        hora: arrayHora[0] + ":" + arrayHora[1]
+      }
+
+      await this.firestore.collection('Ingresos').add(login)
+    }
+  }
 }

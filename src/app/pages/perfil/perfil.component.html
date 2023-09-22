@@ -1,0 +1,186 @@
+<app-nav-bar></app-nav-bar>
+
+<div class="wrap fadeInDown" style="padding-left: 5%; padding-right:5%">
+    <div class="row justify-content-around text-light p-4"
+        style="border-radius: 15px; background-color: rgba(0, 0, 51, 0.699);">
+        <div class="col-6">
+            <div class="text-center">
+                <div *ngIf='this.usuarioActual.perfil == "paciente"' class="row text-center justify-content-around">
+                    <div class="col-12">
+                        <img class="col-4 me-2" style="border-radius: 100%;" [src]="this.usuarioActual.fotoUno"
+                            width=200px height=200px>
+                    </div>
+                </div>
+                <div *ngIf='this.usuarioActual.perfil != "paciente"' class="text-center">
+                    <div>
+                        <img class="mt-2" style="border-radius: 100px;" [src]="this.usuarioActual.fotoUno" width=150px
+                            height=150px>
+                    </div>
+                </div>
+            </div>
+            <hr style=" border-top: 10px dotted">
+            <div>
+                <p class="fs-4 text-center" style="text-transform: uppercase;">{{this.usuarioActual.nombre}}
+                    {{this.usuarioActual.apellido}}</p>
+                <p class="fs-4 text.left">DNI: {{this.dniPipe.transform(usuarioActual.dni)}}</p>
+                <p class="fs-4 text.left">Edad: {{this.usuarioActual.edad}}</p>
+                <p class="fs-4 text.left">Mail: {{this.usuarioActual.mail}}</p>
+            </div>
+        </div>
+        <div class="col-12 text-center">
+            <button class="btn-horario" *ngIf='this.usuarioActual.perfil == "especialista"'
+                (click)='this.mostrarEspecialidades = !this.mostrarEspecialidades'>Mis horarios</button>
+            <button class="btn-horario"
+                *ngIf='this.usuarioActual.perfil == "especialista" && this.mostrarEspecialidades'
+                (click)="this.subirHorario()">Cargar horarios</button>
+            <!--button class="btn-horario" *ngIf='this.usuarioActual.perfil == "paciente"' (click)='this.ver()'>Ver
+                historia clínica</button-->
+
+        </div>
+
+        <div *ngIf='this.mostrarEspecialidades' class="text-light mt-2">
+            <div class="row justify-content-around m-2 text-center">
+                <div class="card bg-dark text-white mt-2 ml-1 col-7 "
+                    style="width: 13em; border-radius: 100%; height: 13em; border-color: rgba(29, 90, 170, 0.925); cursor: pointer;"
+                    *ngFor='let especialidad of this.usuarioActual.especialidades'>
+                    <div class="card-body" (click)='this.especialidadSeleccionada = especialidad'>
+                        <img class="card-img-top" src="{{especialidad.foto}}" width="10px" height="120px">
+                        <h6 class="card-title mt-3">{{especialidad.nombre}}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container bg-dark text-light mt-4 row" *ngIf='this.especialidadSeleccionada != ""'>
+            <div class="col-12">
+                <div class="col-9" style="text-align: center;">
+                    <h4 style="text-align: center; padding-left: 35% ;">Horarios para
+                        <b>{{this.especialidadSeleccionada.nombre}}</b>
+                    </h4>
+                </div>
+
+            </div>
+            <div class="col-12 justify-content-center text-center">
+                <table class="table table-dark tablaUsers mt-3">
+                    <thead>
+                        <th>L</th>
+                        <th>M</th>
+                        <th>M</th>
+                        <th>J</th>
+                        <th>V</th>
+                        <th>S</th>
+                    </thead>
+                    <tbody>
+                        <tr style="width: 100%;">
+                            <td> <button class="btn btn-sm" type="button" id="1" (click)="seleccionarDia(1)"
+                                    [ngClass]="lunesSeleccionado ? 'btn-rd' : 'btn-bl'">☑</button></td>
+                            <td> <button class="btn btn-sm" type="button" id="2" (click)="seleccionarDia(2)"
+                                    [ngClass]="martesSeleccionado ? 'btn-rd' : 'btn-bl'">☑</button></td>
+                            <td> <button class="btn btn-sm" type="button" id="3" (click)="seleccionarDia(3)"
+                                    [ngClass]="miercolesSeleccionado ? 'btn-rd' : 'btn-bl'">☑</button>
+                            </td>
+                            <td> <button class="btn btn-sm" type="button" id="4" (click)="seleccionarDia(4)"
+                                    [ngClass]="juevesSeleccionado ? 'btn-rd' : 'btn-bl'">☑</button></td>
+                            <td> <button class="btn btn-sm" type="button" id="5" (click)="seleccionarDia(5)"
+                                    [ngClass]="viernesSeleccionado ? 'btn-rd' : 'btn-bl'">☑</button>
+                            </td>
+                            <td> <button class="btn btn-sm" type="button" id="6" (click)="seleccionarDia(6)"
+                                    [ngClass]="sabadoSeleccionado ? 'btn-rd' : 'btn-bl'">☑</button></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td *ngIf='!this.sabadoSeleccionado'>
+                                <button class="btn btn-sm" type="button"
+                                    [ngClass]="todoElDiaSeleccionado ? 'btn-rd' : 'btn-bl'"
+                                    (click)="seleccionarHorario('todoElDia')">08 a
+                                    19</button>
+                            </td>
+                            <td *ngIf='!this.sabadoSeleccionado'>
+                                <button class="btn btn-sm" type="button"
+                                    [ngClass]="mananaSeleccionado ? 'btn-rd' : 'btn-bl'"
+                                    (click)="seleccionarHorario('mañana')">08 a
+                                    12</button>
+                            </td>
+                            <td *ngIf='!this.sabadoSeleccionado'>
+                                <button class="btn btn-sm" type="button"
+                                    [ngClass]="tardeSeleccionado ? 'btn-rd' : 'btn-bl'"
+                                    (click)="seleccionarHorario('tarde')">13 a
+                                    19</button>
+                            </td>
+                            <td *ngIf='this.sabadoSeleccionado'>
+                                <button class="btn btn-sm" type="button"
+                                    [ngClass]="sabadoHorarioSeleccionado ? 'btn-rd' : 'btn-bl'"
+                                    (click)="seleccionarHorario('sabado')">8 a
+                                    14</button>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+                <div class="col-3" style="text-align: center;padding-left:42%; margin-bottom:5%;">
+                    <button class="btn-horario" (click)="cargarHorario()">REGISTRAR</button>
+
+                </div>
+            </div>
+        </div>
+        <div *ngIf='this.mostrarPDF && this.historiasClinicasAFiltrar.length != 0' >
+            <div class="row">
+                <input class="form-control col-12" type="text" placeholder="Especialidad" [(ngModel)]="datoABuscar" (ngModelChange)="buscar()">       
+            </div> 
+            <div id="historiaClinica">   
+                <div class="card text-dark mt-2 ml-1 col-9 "
+                    style="background-color: rgb(255, 255, 255);  cursor: pointer; margin-left:140px; margin-right:100px"
+                    *ngFor='let hc of this.historiasClinicasAFiltrar'>
+                    <small class="text-start">{{this.diaDeEmisionParseado}}</small>
+                    <div class="card">
+                        <div class="card-header" style="background-color: rgb(255, 255, 255);">
+                            <img src="../../../favicon.ico" width="75px" height="75px" class="rounded"
+                                style="align-self: center;">
+                            <p class="text-center">
+                                <b class="fs-2 me-5" style="text-transform:uppercase">{{this.auth.usuarioActual.nombre}}
+                                    {{this.auth.usuarioActual.apellido}}</b>
+                            </p>
+                        </div>
+                        <div class="card-body" style="background-color: rgb(255, 255, 255);">
+                            <p class="fs-5">
+                                <b>Especialidad:</b> {{this.hc.especialidad.nombre}}
+                            </p>
+                            <p class="fs-5">
+                             
+                                <b>Altura:</b> {{this.hc.altura}}
+                            </p>
+                            <p class="fs-5">
+                                <b>Peso:</b> {{this.hc.peso}}
+                            </p>
+                            <p class="fs-5">
+                                <b>Temperatura:</b> {{this.hc.temperatura}}
+                            </p>
+                            <p class="fs-5">
+                                <b>Presión:</b> {{this.hc.presion}}
+                            </p>
+                            <p class="fs-5" *ngIf='hc.datoDinamico1 != ""'>
+                                <b>{{this.hc?.datoDinamico1?.clave}}:</b> {{this.hc?.datoDinamico1?.valor}}
+                            </p>
+                            <p class="fs-5" *ngIf='hc.datoDinamico2 != ""'>
+                                <b>{{this.hc?.datoDinamico2?.clave}}:</b> {{this.hc?.datoDinamico2?.valor}}
+                            </p>
+                            <p class="fs-5" *ngIf='hc.datoDinamico3 != ""'>
+                                <b>{{this.hc?.datoDinamico3?.clave}}:</b> {{this.hc?.datoDinamico3?.valor}}
+                            </p>
+                            <p class="fs-5">
+                                <b>Fecha de emisión:</b> {{this.fecha}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <button *ngIf="this.historiasClinicasAFiltrar.length != 0"  class="btn-horario" (click)="this.ver()"  style="margin-top:50px;">Ver historia clínica</button>
+        <button *ngIf="this.mostrarPDF && this.historiasClinicasAFiltrar.length != 0" class="btn-horario" (click)="this.imprimirPdf()" style="margin-top:20px;">Descargar historia clínica</button>
+    </div>
+    
+</div>

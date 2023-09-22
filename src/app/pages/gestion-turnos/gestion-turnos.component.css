@@ -1,0 +1,106 @@
+b{
+    text-transform:uppercase
+}
+.card-pendiente
+{
+    border-radius: 15px;
+    background-color: rgb(47, 74, 104);
+    color: white;
+    padding: 15px;
+}
+
+.card-pendiente
+{
+    border-radius: 15px;
+    background-color: rgb(47, 74, 104);
+    color: white;
+    padding: 15px;
+}
+.card-aceptado
+{
+    border-radius: 15px;
+    background-color: rgb(22, 23, 114);
+    color: white;
+    padding: 15px;
+}
+.card-cancelado
+{
+    border-radius: 15px;
+    background-color: rgb(187, 0, 0);
+    color: white;
+    padding: 15px;
+}
+.card-realizado
+{
+    border-radius: 15px;
+    background-color: rgb(20, 104, 38);
+    color: white;
+    padding: 15px;
+}
+.card-rechazado
+{
+    border-radius: 15px;
+    background-color: rgb(138, 160, 40);
+    color: white;
+    padding: 15px;
+}
+
+/* BOTONES ACCIONES */
+.btn-cancelar {
+    padding: 17px 40px;
+    border-radius: 50px;
+    border: 0;
+    background-color: rgb(190, 0, 0);
+    color: white;
+    box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 15px;
+    transition: all .5s ease;
+   }
+   
+   .btn-cancelar:hover {
+    letter-spacing: 3px;
+    background-color: rgb(243, 72, 66);
+    color: hsl(0, 0%, 100%);
+    box-shadow: rgb(220, 24, 24) 0px 7px 29px 0px;
+   }
+   
+   .btn-cancelar:active {
+    letter-spacing: 3px;
+    background-color: hsl(261deg 80% 48%);
+    color: hsl(0, 0%, 100%);
+    box-shadow: rgb(93 24 220) 0px 0px 0px 0px;
+    transform: translateY(10px);
+    transition: 100ms;
+   }
+
+
+.btn-enviar {
+    padding: 17px 40px;
+    border-radius: 50px;
+    border: 0;
+    background-color: rgb(0, 138, 80);
+    color: white;
+    box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 15px;
+    transition: all .5s ease;
+   }
+   
+   .btn-enviar:hover {
+    letter-spacing: 3px;
+    background-color: rgb(66, 243, 219);
+    color: hsl(0, 0%, 100%);
+    box-shadow: rgb(24, 220, 122) 0px 7px 29px 0px;
+   }
+   
+   .btn-enviar:active {
+    letter-spacing: 3px;
+    background-color: hsl(261deg 80% 48%);
+    color: hsl(0, 0%, 100%);
+    box-shadow: rgb(93 24 220) 0px 0px 0px 0px;
+    transform: translateY(10px);
+    transition: 100ms;
+   }

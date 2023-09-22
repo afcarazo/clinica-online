@@ -1,5 +1,6 @@
 <app-nav-bar></app-nav-bar>
 <div *ngIf="this.spinner" class="spinner"></div>
+
 <body>
 
     <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
@@ -103,19 +104,40 @@
                                     formularioRegistro.controls['clave'].touched">
                                             La contraseña es requerida
                                         </small>
-                                        <small *ngIf="formularioRegistro.controls['clave'].errors?.['minlength']" >
+                                        <small *ngIf="formularioRegistro.controls['clave'].errors?.['minlength']">
                                             La contraseña debe tener como mínimo seis digitos
                                         </small>
                                     </div>
                                 </div>
                                 <div class="col-9 mb-3">
-                                    <input type="file" multiple  formControlName='imagen' (change)="change($event)">
+                                    <input type="file" multiple formControlName='imagen' (change)="change($event)">
                                     <small class="invalid" *ngIf="formularioRegistro.controls['imagen'].errors?.['required'] &&
                                         formularioRegistro.controls['imagen'].touched">
                                         Las imagenes son requeridas
                                     </small>
                                 </div>
                             </div>
+                            <label for="capcha" class="label">Capcha</label><br>
+                            <div class="input-group mb-3">
+                                <div style="display: block;   width: 10%;">
+                                    <input type="number" class="input--style-4-inp-x-cap" value={{this.numeroRandom}} readonly>
+                                </div>
+                                <div style="display: block;">
+                                    <input type="text" class="input--style-4-inp" formControlName='capcha' name="capcha"
+                                        required><br>
+                                    <small class="invalid" style="margin-left: 10%;"
+                                        *ngIf="formularioRegistro.controls['capcha'].errors?.['required'] && formularioRegistro.controls['capcha'].touched">El
+                                        capcha es requerido</small>
+                                </div>
+                                <div style="display: block;   width: 20%;">
+                                    <input type="text" class="input--style-4-inp-x" required readonly 
+                                        *ngIf='this.formularioRegistro.get("capcha")?.value != this.numeroRandom'>
+                                    <input type="text" class="input--style-4-inp-x" required readonly class="input--style-4-inp-y"
+                                        *ngIf='this.formularioRegistro.get("capcha")?.value == this.numeroRandom'>
+                                </div>
+                            </div>
+
+
 
                             <div class="p-t-15">
                                 <button (click)="registrar()" type="submit">Registrate</button>

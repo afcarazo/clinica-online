@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
     try {
       if (this.user.email != '' && this.user.password != '') {
         this.spinner = true;
-        await this.authService.login(this.user.email, this.user.password).then((data) => {
+        await this.authService.login(this.user.email, this.user.password).then(async(data) => {
           let aprobado = this.authService.usuarioActual.aprobado;
           console.log('APROBADO', aprobado);
           if (data?.user?.emailVerified) {
@@ -70,13 +70,13 @@ export class LoginComponent implements OnInit {
             if (!aprobado && this.authService.usuarioActual.perfil == 'especialista') {
               this.spinner = false;
               this.notificacionesService.showNotificationError('ERROR!', 'Primero deberia ser aprobado por un administrador!');
-              this.authService.logout();
+              await this.authService.logout();
               
             }
           }
           else {
             this.notificacionesService.showNotificationError('ERROR', 'Primero verifica tu cuenta!');
-            this.authService.logout();
+            await this.authService.logout();
           }
         })
 
@@ -93,10 +93,11 @@ export class LoginComponent implements OnInit {
 
     if (this.user.email != '' && this.user.password != '') {
       this.spinner = true;
-      await this.authService.login(this.user.email, this.user.password).then((data) => {
+      await this.authService.login(this.user.email, this.user.password).then(async (data) => {
         this.spinner = false;
+     
         this.notificacionesService.showNotificationSuccess('Login exitoso!', 'Redirigiendo a home!');
-        setTimeout(() => { this.router.navigateByUrl('', { replaceUrl: true }); }, 2000);
+        setTimeout(async() => { this.router.navigateByUrl('', { replaceUrl: true });   await this.authService.agregarLogin(this.authService.usuarioActual); }, 2000);
       }).catch(error => { 
         this.spinner = false;
         this.notificacionesService.showNotificationError('ERROR',error);

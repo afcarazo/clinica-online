@@ -1,23 +1,95 @@
 <app-nav-bar></app-nav-bar>
+<div *ngIf="this.spinner" class="spinner"></div>
 <div class="row justify-content-center text-center">
 </div>
 <div class="p-3">
-    <div class="text-light mt-2">
-        <div class="row justify-content-around m-2 text-center">
-            <div >
-                <div class="p-3">
-                  <div class="text-light mt-2">
-                    <div class="row justify-content-around m-2 text-center">
-                      <div class="card bg-dark text-white mt-2 me-3 col-6 " style="width: 16em; height: 16em; border-color: rgba(6, 0, 94, 0.925); cursor: pointer; border-radius: 100%; margin-bottom: 0%;"
-                        *ngFor='let especialidad of this.listadoEspecialidades'>
-                                <div class="card-body" >
-                                    <img class="card-img-top" src="{{especialidad.foto}}" height="70%" >
-                                    <h6  style="margin-top: 0%; text-transform: uppercase;" class="card-title mt-3" >{{especialidad.nombre}}</h6>
-                                </div>
-                            </div>
-                    </div> 
+  <div class="text-light mt-2">
+    <div class="row justify-content-around m-2 text-center">
+      <div>
+        <div class="p-3">
+          <div class="text-light mt-2">
+            <!--ELEGIR ESPECIALIDAD-->
+            <div *ngIf="!this.eligioEspecialidad" class="row justify-content-around m-2 text-center">
+              <div class="card bg-dark text-white mt-2 me-3 col-6 "
+                style="width: 16em; height: 16em; border-color: rgba(6, 0, 94, 0.925); cursor: pointer; border-radius: 100%; margin-bottom: 0%;"
+                *ngFor='let especialidad of this.listadoEspecialidades'>
+                <div class="card-body" (click)='elegirEspecialidad(especialidad)'>
+                  <img class="card-img-top" src="{{especialidad.foto}}" height="auto">
+                </div>
+              </div>
+            </div>
+            <div *ngIf="this.auth.usuarioActual.perfil==='administrador' && !this.pacienteCargado && this.eligioEspecialidad && this.verPaciente"
+              class="row justify-content-around m-2 text-center">
+              <div class="card bg-dark text-white mt-2 me-3 col-6 "
+                style="width: 16em; height: 16em; border-color: rgba(6, 0, 94, 0.925); cursor: pointer; border-radius: 100%; margin-bottom: 0%;"
+                *ngFor='let paciente of this.pacientes'>
+                <div class="card-body" (click)='cargarPaciente(paciente)'>
+                  <img class="card-img-top" src="{{paciente.fotoUno}}" height="50%"  style="border-radius: 100%; margin-top: 10%;  object-fit: Cover;" >
+                  <h6 class="card-title mt-3">{{paciente.nombre}}</h6>
+                </div>
+              </div>
+            </div>
+            </div>
+            <!--FIN ESPECIALIDAD-->
+            <!--ELEGIR ESPECIALISTA-->
+            <div *ngIf="this.eligioEspecialidad && !this.eligioEspecialista && !this.verPaciente"
+              class="row justify-content-around m-2 text-center">
+              <div class="card bg-dark text-white mt-2 me-3 col-6 "
+                style="width: 16em; height: 16em; border-color: rgba(6, 0, 94, 0.925); cursor: pointer; border-radius: 100%; margin-bottom: 0%;"
+                *ngFor='let especialista of this.listadoEspecialistasFiltradoEspecialidad'>
+                <div class="card-body" (click)='seleccionarEspecialista(especialista)'>
+                  <img class="card-img-top" src="{{especialista.fotoUno}}" height="auto">
+                  <h6 class="card-title mt-3">{{especialista.nombre}}</h6>
+                </div>
+              </div>
+            </div>
+            <!--FIN ESPECIALISTA-->
+            <!--HORARIOS/DIAS-->
+            <div style="background-color: rgba(0, 0, 0, 0.432); border-radius: 25px;">
+              <div *ngIf="verTurnos">
+                <div class="row justify-content-around">
+                  <div class="col-7 text-center" style="overflow-y: auto;">
+                    <button type="button" class="btn-turno" *ngFor='let dia of this.diasArrayFiltrados'
+                      (click)='this.mostrarHorarios(dia)'>{{dia}}</button>
                   </div>
                 </div>
+                <p class="text-light text-center fs-3 pt-3 pb-3" *ngIf='this.sinDias'>
+                  {{this.especialistaSeleccionado.nombre}} {{this.especialistaSeleccionado.apellido}} ya no tiene dias
+                  disponibles, sentimos las molestias</p>
+
+                <div *ngIf="verHoras">
+                  <div class="row justify-content-around">
+                    <div class="mt-2 ml-1 col-7 text-center" style="overflow-y: auto;">
+                      <button type="button" class="btn-horario" *ngFor='let hora of this.horasArray'
+                        (click)='this.seleccionarTurno(hora)'>{{hora}}</button>
+                    </div>
+                  </div>
                 </div>
+              </div>
+            </div>
+            <!--HORARIOS/DIAS-->
+
+            <div
+              *ngIf='this.especialistaSeleccionado != "" && this.especialistaSeleccionado.especialidades.length == 1 && this.especialidadSeleccionada != ""'
+              style="background-color: rgba(0, 0, 0, 0.623); border-radius: 25px;">
+              <div class="p-3">
+                <div class="text-light mt-2">
+                  <div class="row justify-content-around m-2 text-center">
+                    <div class="card bg-dark text-white mt-2 me-3 col-6 "
+                      style="width: 12em; height: 14em; border-color: rgba(29, 38, 170, 0.925);">
+                      <div class="card-body">
+                        <img class="card-img-top" src="{{this.especialidadSeleccionada.imagen}}" width="10px"
+                          height="120px">
+                        <h6 class="card-title mt-3">{{this.especialidadSeleccionada.nombre}}</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+
+            </div>
+          </div>
         </div>
-    </div>
+      </div>

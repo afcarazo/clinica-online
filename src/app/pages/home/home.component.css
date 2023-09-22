@@ -99,7 +99,7 @@
   position: relative;
   width: 100%;
   height: 500px;
-  background: url("../../../assets/banner.jpg") no-repeat 50% 30%;
+  background: url("../../../assets/clinica.png") no-repeat 50% 30%;
   background-size: 100%;
   margin-bottom: 20px;
   animation: background linear 12s alternate 1s infinite;
@@ -119,12 +119,12 @@
 
 @keyframes background {
   0% {
-    background: url("../../../assets/banner.jpg") no-repeat 50% 30%;
+    background: url("../../../assets/clinica.png") no-repeat 50% 30%;
     background-size: 100%;
     transition: background 0.5s ease-in-out;
   }
   100% {
-    background: url("../../../assets/banner.jpg") no-repeat 50% 60%;
+    background: url("../../../assets/clinica.png") no-repeat 50% 60%;
     background-size: 100%;
     transition: background 0.5s ease-in-out;
   }
@@ -205,3 +205,105 @@ h2
   transition: all .5s ease-in-out;
   animation: gradient 10s infinite cubic-bezier(.62, .28, .23, .99) both;
 }
+
+
+@keyframes fadeInUp {
+  from {
+      transform: translate3d(0,100%,0)
+  }
+
+  to {
+      transform: translate3d(0,0,0);
+      opacity: 1
+  }
+}
+
+@-webkit-keyframes fadeInUp {
+  from {
+      transform: translate3d(0,100%,0)
+  }
+
+  to {
+      transform: translate3d(0,0,0);
+      opacity: 1
+  }
+}
+
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-fill-mode: both
+}
+
+.animatedFadeInUp {
+  opacity: 0
+}
+
+.fadeInUp {
+  opacity: 0;
+  animation-name: fadeInUp;
+  -webkit-animation-name: fadeInUp;
+}
+
+.btn-log{
+  display: inline-block;
+  padding: 12px 24px;
+  border: 1px solid #4f4f4f;
+  border-radius: 4px;
+  transition: all 0.2s ease-in;
+  position: relative;
+  overflow: hidden;
+  font-size: 19px;
+  z-index: 1;
+  
+ }
+ 
+ .btn-log:before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) scaleY(1) scaleX(1.25);
+  top: 100%;
+  width: 140%;
+  height: 180%;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+  display: block;
+  transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+  z-index: -1;
+  color:#fff
+ }
+ 
+ .btn-log:after {
+  content: "";
+  position: absolute;
+  left: 55%;
+  color:#fff;
+  top: 180%;
+  width: 160%;
+  height: 190%;
+  background-color: #39bda7;
+  border-radius: 50%;
+  display: block;
+  transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+  z-index: -1;
+ }
+ 
+ .btn-log:hover {
+  color: #ffffff;
+  border: 1px solid #008cff;
+ }
+ 
+ .btn-log:hover:before {
+  top: -35%;
+  background-color: #008cff;
+  transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+  color:#fff 
+}
+ 
+ .btn-log:hover:after {
+  top: -45%;
+  background-color: #008cff;
+  transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+ }

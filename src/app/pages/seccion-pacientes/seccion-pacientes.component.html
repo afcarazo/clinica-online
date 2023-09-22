@@ -1,0 +1,88 @@
+<app-nav-bar></app-nav-bar>
+<div class="row justify-content-around text-center">
+    <div class="p-3">
+        <div class="text-light mt-2">
+            <div class="row justify-content-around m-2 text-center">
+                <div class="card text-white mt-2 ml-1 col-7 "
+                    style="width: 20em; height: 23em; border-color: rgba(255, 255, 255, 0.925); cursor: pointer; background-color: rgba(0, 0, 0, 0.432) ;"
+                    *ngFor='let paciente of this.pacientesFiltrados'>
+                    <div class="card-body">
+                        <div class="row justify-content-between">
+                            <div class="col-6 d-flex">
+                                <img class="card-img-top col-5 me-3" src="{{paciente.fotoUno}}" width="20px"
+                                    height="120px">
+                                <img class="card-img-top col-5 ms-3" src="{{paciente.fotoDos}}" width="20px"
+                                    height="120px">
+                            </div>
+                            <h6 class="card-title mt-3">{{paciente.nombre}} {{paciente.apellido}}</h6>
+
+                            <div>
+                                <button class="btn-horario" (click)='this.mostrarHistoriaClinica(paciente)'>Mostrar
+                                    historia clinica</button>
+                                <button class="btn-horario" (click)='this.cargarArrayDias(paciente)'>Ver tres últimos
+                                    turnos</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf='this.mostrarHistoriales && this.historialesFiltrados.length>0' class="text-light mt-2">
+            <div class="row justify-content-around m-2">
+                <div class="card text-dark text-start mt-2 col-9 mb-2"
+                    style="background-color: rgba(24, 24, 24, 0.562); border-color: rgba(255, 255, 255, 0.925); cursor: pointer;"
+                    *ngFor='let hc of this.historialesFiltrados'>
+                    <div class="card-header" style="background-color: rgba(24, 24, 24, 0.562); color:white">
+                        <p>
+                            <b class="fs-5 me-5">Fecha: {{hc.fecha.dia}}</b>
+                            <b class="fs-5 me-5">Especialista: {{hc.especialista.nombre}}
+                                {{hc.especialista.apellido}}</b>
+                            <b class="fs-5">Especialidad: {{hc.especialidad.nombre}}</b>
+                        </p>
+                    </div>
+                    <div class="card-body" style="color: white;">
+                        <p class="fs-5">
+                            <b>Altura:</b> {{hc.altura}}
+                        </p>
+                        <p class="fs-5">
+                            <b>Peso:</b> {{hc.peso}}
+                        </p>
+                        <p class="fs-5">
+                            <b>Temperatura:</b> {{hc.temperatura}}
+                        </p>
+                        <p class="fs-5">
+                            <b>Presión:</b> {{hc.presion}}
+                        </p>
+                        <p class="fs-5" *ngIf='hc.datoDinamico1 != ""'>
+                            <b>{{hc?.datoDinamico1?.clave}}:</b> {{hc?.datoDinamico1?.valor}}
+                        </p>
+                        <p class="fs-5" *ngIf='hc.datoDinamico2 != ""'>
+                            <b>{{hc?.datoDinamico2?.clave}}:</b> {{hc?.datoDinamico2?.valor}}
+                        </p>
+                        <p class="fs-5" *ngIf='hc.datoDinamico3 != ""'>
+                            <b>{{hc?.datoDinamico3?.clave}}:</b> {{hc?.datoDinamico3?.valor}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-horario" (click)='this.cerrarHistoriales()'>Cerrar
+                historia clinica</button>
+        </div>
+        <div *ngIf="this.mostrarAtenciones" class="row justify-content-around m-2" style=" background-color: rgba(24, 24, 24, 0.562);">
+            <h1 style="color:white; text-transform:uppercase"c>últimos turnos</h1>
+            <div 
+                *ngFor='let dia of this.atenciones'>
+                <div class="card-header" style="color:white">
+                    <p class="mb-0" >{{dia}}</p>
+                </div>
+              
+            </div>
+             <button class="btn-horario" style="margin-top:2%" (click)='this.cerrarDias()'>Ocultar últimos turnos</button>
+        </div>
+
+        <div *ngIf='this.pacientesFiltrados.length == 0' class="text-dark mt-4">
+            <p class="fs-2">{{this.as.usuarioActual.nombre}} {{this.as.usuarioActual.apellido}} no ha atendido a ninguna
+                persona</p>
+        </div>
+    </div>

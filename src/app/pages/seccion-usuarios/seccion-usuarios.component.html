@@ -5,7 +5,6 @@
         LISTADO USUARIOS
     </h4>
     <table class="table table-hover" style="text-align: center;">
-
         <thead>
             <tr>
                 <th scope="col">NOMBRE</th>
@@ -19,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr style="cursor: pointer" *ngFor="let usuario of this.listadoUsuarios">
+            <tr [appClickUser]="usuario.perfil" style="cursor: pointer" *ngFor="let usuario of this.listadoUsuarios" (click)='this.mostrarHistoriaClinica(usuario)'  >
                 <td>{{usuario.nombre}}</td>
                 <td>{{usuario.apellido}}</td>
                 <td>{{usuario.edad}}</td>
@@ -28,15 +27,87 @@
                 <td>{{usuario.perfil}}</td>
                 <td><img width="50" src="{{ usuario.fotoUno }}" alt="imagen" /></td>
                 <td *ngIf="usuario.perfil == 'especialista'">
-                    <button *ngIf="!this.usuario.aprobado" class="habilitar" (click)="habilitarEspecialista(usuario.uid)">habilitar</button>
-                    <button *ngIf="this.usuario.aprobado" class="desabilitar"  (click)="deshabilitarEspecialista(usuario.uid)">deshabilitar</button>
+                    <button *ngIf="!this.usuario.aprobado" class="habilitar"
+                        (click)="habilitarEspecialista(usuario.uid)">habilitar</button>
+                    <button *ngIf="this.usuario.aprobado" class="desabilitar"
+                        (click)="deshabilitarEspecialista(usuario.uid)">deshabilitar</button>
                 </td>
             </tr>
         </tbody>
     </table>
-    <div style="text-align: center;">
-        <button class="elegir" (click)="navegarARegistroPaciente()" >Registrar paciente</button>
-        <button class="elegir" (click)="navegarARegistroEspecialista()" >Registrar especialista</button>
+    <div style="text-align: center; ">
+        <button class="elegir" (click)="navegarARegistroPaciente()">Registrar paciente</button>
+        <button class="elegir" (click)="navegarARegistroEspecialista()">Registrar especialista</button>
         <button class="elegir" (click)="navegarARegistroAdministrador()">Registrar administrador</button>
+        <button appBtnUsuarios class="elegir" (click)="this.generarExcel()" @enterState>Generar Excel</button>
     </div>
+
+    <div *ngIf='this.mostrarHistoriales && this.historialesFiltrados.length>0' class="text-light mt-2" style="text-align:center; background-color:rgba(0, 0, 0, 0.329)">
+        <h1>HISTORIA CLÍNICA</h1>
+        <div class="row justify-content-around m-2">
+            <div class="card text-dark text-start mt-2 col-9 mb-2"
+                style="background-color: rgba(24, 24, 24, 0.562); border-color: rgba(255, 255, 255, 0.925); cursor: pointer;"
+                *ngFor='let hc of this.historialesFiltrados'>
+                <div class="card-header" style="background-color: rgba(24, 24, 24, 0.562); color:white">
+                    <p>
+                        <b class="fs-5 me-5">Fecha: {{hc.fecha.dia}}</b>
+                        <b class="fs-5 me-5">Especialista: {{hc.especialista.nombre}}
+                            {{hc.especialista.apellido}}</b>
+                        <b class="fs-5">Especialidad: {{hc.especialidad.nombre}}</b>
+                    </p>
+                </div>
+                <div class="card-body" style="color: white;">
+                    <p class="fs-5">
+                        <b>Altura:</b> {{hc.altura}}
+                    </p>
+                    <p class="fs-5">
+                        <b>Peso:</b> {{hc.peso}}
+                    </p>
+                    <p class="fs-5">
+                        <b>Temperatura:</b> {{hc.temperatura}}
+                    </p>
+                    <p class="fs-5">
+                        <b>Presión:</b> {{hc.presion}}
+                    </p>
+                    <p class="fs-5" *ngIf='hc.datoDinamico1 != ""'>
+                        <b>{{hc?.datoDinamico1?.clave}}:</b> {{hc?.datoDinamico1?.valor}}
+                    </p>
+                    <p class="fs-5" *ngIf='hc.datoDinamico2 != ""'>
+                        <b>{{hc?.datoDinamico2?.clave}}:</b> {{hc?.datoDinamico2?.valor}}
+                    </p>
+                    <p class="fs-5" *ngIf='hc.datoDinamico3 != ""'>
+                        <b>{{hc?.datoDinamico3?.clave}}:</b> {{hc?.datoDinamico3?.valor}}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-horario" style="text-align: center;" (click)='this.cerrarHistoriales()'>Cerrar
+            historia clinica</button>
+    </div>
+    <div class="p-3" style="background-color: rgba(5, 1, 26, 0.404);">
+        <div class="text-light mt-2">
+            <div class="row justify-content-around m-2 text-center" >
+                <div>
+                    <div class="p-3">
+                        <div class="text-light mt-2" >
+                            <!--ELEGIR ESPECIALIDAD-->
+                        <h1>PACIENTES</h1>
+                            <div *ngIf="this.listadoPacientes.length!=0" class="row justify-content-around m-2 text-center">
+                                <div class="card bg-dark text-white mt-2 me-3 col-6 "
+                                    style="width: 16em; height: 16em; border-color: rgba(6, 0, 94, 0.925); cursor: pointer; border-radius: 100%; margin-bottom: 0%;"
+                                    *ngFor='let paciente of this.listadoPacientes'>
+                                    <div class="card-body" (click)='this.generarExcelDePaciente(paciente)' ><!--clicjk-->
+                                        <img class="card-img-top" src="{{paciente.fotoUno}}" height="50%"  style="border-radius: 100%; margin-top: 10%;  object-fit: Cover;" >
+                                        <h6 class="card-title mt-3">{{paciente.nombre}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>

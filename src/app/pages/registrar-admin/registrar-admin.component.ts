@@ -21,10 +21,12 @@ export class RegistrarAdminComponent implements OnInit {
 
   especialidades: any[] = [];
   formularioRegistro: FormGroup;
+  
   administrador: Administrador;
   formData: FormData;
   fotoUno: any;
   spinner: boolean = false;
+  numeroRandom: any;
   constructor(public fb: FormBuilder, private firestoreEspecialidad: EspecialidadesService, private imageService: ImageService, private firestore: FirestoreService, private notificacion: NotificationsService, private auth: AuthService) {
     this.administrador = new Administrador();
     this.formularioRegistro = this.fb.group({
@@ -35,9 +37,10 @@ export class RegistrarAdminComponent implements OnInit {
       especialidad: ['', Validators.required],
       dni: ['', Validators.required],
       clave: ['', [Validators.required, Validators.minLength(6)]],
-      imagen: ['', Validators.required]
+      imagen: ['', Validators.required],
+      capcha: ['', [Validators.required]]
     });
-
+    this.numeroRandom = Math.floor(Math.random() * (500 - 100)) + 100;
     this.formData = new FormData();
   }
 
@@ -85,25 +88,30 @@ export class RegistrarAdminComponent implements OnInit {
 
     this.spinner = true;
     const retorno = await this.subirFoto();
+    let capcha = this.formularioRegistro.get("capcha")?.value;
+    if (capcha == this.numeroRandom) {
 
-    if (retorno) {
+      if (retorno) {
 
-      if (this.formularioRegistro.valid) {
-        this.notificacion.showNotificationSuccess('Registrando...', 'aguarde');
+        if (this.formularioRegistro.valid) {
+          this.notificacion.showNotificationSuccess('Registrando...', 'aguarde');
 
-        await this.auth.registrarAdministrador(this.administrador);
-        this.spinner = false;
-        console.log(this.administrador);
-        setTimeout(() => {
-          this.formularioRegistro.reset();
-          this.administrador = new Administrador();
-        }, 4000);
+          await this.auth.registrarAdministrador(this.administrador);
+          this.spinner = false;
+          console.log(this.administrador);
+          setTimeout(() => {
+            this.formularioRegistro.reset();
+            this.administrador = new Administrador();
+          }, 4000);
 
-      }
-      else { 
-        this.notificacion.showNotificationError('ERROR','Debe completar todos los campos!');
-      }
+        }
+        else {
+          this.notificacion.showNotificationError('ERROR', 'Debe completar todos los campos!');
+        }
       
+      }
+    } else { 
+      this.notificacion.showNotificationError('ERROR', 'Debe completar todos los campos');
     }
     
     this.spinner = false;

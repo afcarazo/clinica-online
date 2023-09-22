@@ -8,17 +8,26 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
-  activo: boolean;
-  administrador: boolean=false;
-  constructor(private router: Router, private auth: AuthService) {
-    this.activo = this.auth.sesionActiva;
-    if (this.auth.usuarioActual !=undefined ) {
-      if (this.auth.usuarioActual.perfil === "administrador") { 
-        this.administrador = true;
+  activo: boolean=false;
+  administrador: boolean = false;
+  paciente: boolean = false;
+  especialista: boolean = false;
+  constructor(private router: Router, public auth: AuthService) {
+    if (this.auth.usuarioActual) {
+      this.activo = this.auth.sesionActiva;
+      if (this.auth.usuarioActual != undefined) {
+        if (this.auth.usuarioActual.perfil === "administrador") {
+          this.administrador = true;
+        }
+        else if (this.auth.usuarioActual.perfil === "paciente") {
+          this.paciente = true;
+        }
+        else if (this.auth.usuarioActual.perfil === "especialista") {
+          this.especialista = true;
+        }
       }
-     }
-   }
-
+    }
+  }
   ngOnInit(): void {
   }
   navegarALogin() { 
@@ -29,6 +38,12 @@ export class NavBarComponent implements OnInit {
   }
   navegarSacarTurno() { 
     this.router.navigateByUrl('sacar-turno');
+  }
+  navegarSeccionPaciente() { 
+    this.router.navigateByUrl('seccion-pacientes');
+  }
+  navegarGraficos() { 
+    this.router.navigateByUrl('graficos');
   }
 
   cerrarSesion() {

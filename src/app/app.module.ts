@@ -21,6 +21,21 @@ import { SeccionUsuariosComponent } from './pages/seccion-usuarios/seccion-usuar
 import { RegistrarAdminComponent } from './pages/registrar-admin/registrar-admin.component';
 import { PacienteEspecilistaComponent } from './pages/paciente-especilista/paciente-especilista.component';
 import { SacarTurnoComponent } from './pages/sacar-turno/sacar-turno.component';
+import { PerfilAccionesComponent } from './pages/perfil-acciones/perfil-acciones.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
+import { DiaPipe } from './pipes/dia.pipe';
+import { FechaPipe } from './pipes/fecha.pipe';
+import { VerTurnosComponent } from './pages/ver-turnos/ver-turnos.component';
+import { GestionTurnosComponent } from './pages/gestion-turnos/gestion-turnos.component';
+import { SeccionPacientesComponent } from './pages/seccion-pacientes/seccion-pacientes.component';
+import { GraficosComponent } from './pages/graficos/graficos.component';
+import { BtnHomeDirective } from './directivas/btn-home.directive';
+import { CardUsuarioDirective } from './directivas/card-usuario.directive';
+import { ClickUserDirective } from './directivas/click-user.directive';
+import { FormatoNombreApellidoPipe } from './pipes/formato-nombre-apellido.pipe';
+import { FormatoDniPipe } from './pipes/formato-dni.pipe';
+
+
 
 
 @NgModule({
@@ -34,7 +49,20 @@ import { SacarTurnoComponent } from './pages/sacar-turno/sacar-turno.component';
     SeccionUsuariosComponent,
     RegistrarAdminComponent,
     PacienteEspecilistaComponent,
-    SacarTurnoComponent
+    SacarTurnoComponent,
+    PerfilAccionesComponent,
+    PerfilComponent,
+    DiaPipe,
+    FechaPipe,
+    VerTurnosComponent,
+    GestionTurnosComponent,
+    SeccionPacientesComponent,
+    GraficosComponent,
+    BtnHomeDirective,
+    CardUsuarioDirective,
+    ClickUserDirective,
+    FormatoNombreApellidoPipe,
+    FormatoDniPipe
   ],
   imports: [
     BrowserModule,
@@ -48,7 +76,7 @@ import { SacarTurnoComponent } from './pages/sacar-turno/sacar-turno.component';
     BrowserAnimationsModule
 
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, FechaPipe, DiaPipe, FormatoNombreApellidoPipe, FormatoDniPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

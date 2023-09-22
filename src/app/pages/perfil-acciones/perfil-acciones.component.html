@@ -1,0 +1,8 @@
+<app-nav-bar></app-nav-bar>
+<div class="row justify-content-around text-center">
+    <div class="col-12" >
+        <button class="col-6 button fs-3 ms-2" (click)="this.navegarHacia(1)">Ver mi perfil</button>
+        <button class="col-6 button fs-3 ms-2" *ngIf='this.userActual.perfil == "paciente" || this.userActual.perfil == "especialista" ' (click)="this.navegarHacia(2)">Mis turnos</button>
+        <button class="col-6 button fs-3 ms-2" *ngIf='this.userActual.perfil === "administrador"' (click)="this.navegarHacia(3)">Turnos</button>
+    </div>
+</div>

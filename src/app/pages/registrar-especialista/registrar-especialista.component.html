@@ -130,6 +130,27 @@
                                     </small>
                                 </div>
                             </div>
+                            <label for="capcha" class="label">Capcha</label><br>
+                            <div class="input-group mb-3">
+                                <div style="display: block;   width: 10%;">
+                                    <input type="number" class="input--style-4-inp-x-cap" value={{this.numeroRandom}} readonly>
+                                </div>
+                                <div style="display: block;">
+                                    <input type="text" class="input--style-4-inp" formControlName='capcha' name="capcha"
+                                        required><br>
+                                    <small class="invalid" style="margin-left: 10%;"
+                                        *ngIf="formularioRegistro.controls['capcha'].errors?.['required'] && formularioRegistro.controls['capcha'].touched">El
+                                        capcha es requerido</small>
+                                </div>
+                                <div style="display: block;   width: 20%;">
+                                    <input type="text" class="input--style-4-inp-x" required readonly 
+                                        *ngIf='this.formularioRegistro.get("capcha")?.value != this.numeroRandom'>
+                                    <input type="text" class="input--style-4-inp-x" required readonly class="input--style-4-inp-y"
+                                        *ngIf='this.formularioRegistro.get("capcha")?.value == this.numeroRandom'>
+                                </div>
+                            </div>
+
+
                             <div class="p-t-15" style="text-align: center;">
                                 <button (click)="registrar()" class="button-reg" type="submit">Registrate</button>
                             </div>

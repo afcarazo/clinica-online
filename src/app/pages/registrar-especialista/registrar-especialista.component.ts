@@ -25,6 +25,7 @@ export class RegistrarEspecialistaComponent implements OnInit {
   formData: FormData;
   fotoUno: any;
   spinner: boolean = false;
+  numeroRandom: any;
   constructor(public fb: FormBuilder, private firestoreEspecialidad: EspecialidadesService, private imageService: ImageService, private firestore: FirestoreService, private notificacion: NotificationsService, private auth: AuthService) {
     this.especialista = new Especialista();
     this.formularioRegistro = this.fb.group({
@@ -35,8 +36,10 @@ export class RegistrarEspecialistaComponent implements OnInit {
       especialidad: [''],
       dni: ['', Validators.required],
       clave: ['', [Validators.required, Validators.minLength(6)]],
-      imagen: ['', Validators.required]
+      imagen: ['', Validators.required],
+      capcha: ['', [Validators.required]]
     });
+    this.numeroRandom = Math.floor(Math.random() * (500 - 100)) + 100;
     this.firestoreEspecialidad.traerListaEspecialidades().subscribe(especialidades => {
       this.especialidades = [];
       if (especialidades != null) {
@@ -54,16 +57,13 @@ export class RegistrarEspecialistaComponent implements OnInit {
   cargarEspecialidad(especialidadAgregar: Especialidad) {
 
     let flag = false;
-    for(let especialidad of this.especialidadesAgregar) 
-    {
-      if(especialidadAgregar.nombre == especialidad.nombre)
-      {     
+    for (let especialidad of this.especialidadesAgregar) {
+      if (especialidadAgregar.nombre == especialidad.nombre) {
         flag = true;
       }
     }
 
-    if(!flag)
-    {
+    if (!flag) {
       this.especialidadesAgregar.push(especialidadAgregar);
     }
   }
@@ -72,7 +72,7 @@ export class RegistrarEspecialistaComponent implements OnInit {
     if (especialidadNombre != '') {
       let flag: boolean = false;
 
-      let especialidadCompleta: Especialidad ={
+      let especialidadCompleta: Especialidad = {
         nombre: especialidadNombre,
         foto: "https://firebasestorage.googleapis.com/v0/b/clinica-online-7c11f.appspot.com/o/icono.png?alt=media&token=d0bcc7f1-e8c4-4c78-a879-ab6c7204f201"
 
@@ -115,7 +115,7 @@ export class RegistrarEspecialistaComponent implements OnInit {
       this.spinner = true;
       await this.imageService.subirImagen(this.fotoUno, archive1, this.especialista, 1).catch(error => {
         this.notificacion.showNotificationError('ERROR', 'Ocurrio un error al subir la primer imagen');
-              this.spinner = false;
+        this.spinner = false;
         retorno = false;
         console.log(error);
       });
@@ -133,27 +133,30 @@ export class RegistrarEspecialistaComponent implements OnInit {
 
     this.spinner = true;
     const retorno = await this.subirFoto();
+    let capcha = this.formularioRegistro.get("capcha")?.value;
+    if (capcha == this.numeroRandom) {
+      if (retorno) {
+        this.especialista.especialidad = this.especialidadesAgregar;
+        if (this.formularioRegistro.valid) {
+          this.notificacion.showNotificationSuccess('Registrando...', 'aguarde');
 
-    if (retorno) {
-      this.especialista.especialidad = this.especialidadesAgregar;
-      if (this.formularioRegistro.valid) {
-        this.notificacion.showNotificationSuccess('Registrando...', 'aguarde');
+          console.log('ESPECIALISTA', this.especialista);
+          await this.auth.registrarEspecialista(this.especialista);
+          this.spinner = false;
+          setTimeout(() => {
+            this.formularioRegistro.reset();
+            this.especialista = new Especialista();
+            this.especialidadesAgregar = [];
+          }, 4000);
 
-        console.log('ESPECIALISTA', this.especialista);
-        await this.auth.registrarEspecialista(this.especialista);
+        } else {
+          this.notificacion.showNotificationError('ERROR', 'Debe completar todos los campos');
+        }
         this.spinner = false;
-        setTimeout(() => {
-          this.formularioRegistro.reset();
-          this.especialista = new Especialista();
-          this.especialidadesAgregar = [];
-        }, 4000);
-
-      } else { 
-        this.notificacion.showNotificationError('ERROR','Debe completar todos los campos');
       }
-      this.spinner=false;
+    } else {
+      this.notificacion.showNotificationError('ERROR', 'Debe completar todos los campos!');
     }
-
   }
 
 }

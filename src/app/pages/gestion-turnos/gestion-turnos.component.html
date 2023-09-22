@@ -1,0 +1,70 @@
+<app-nav-bar></app-nav-bar>
+
+<br>
+<div class="container  turnos p-3" style="border-radius: 2px; background-color: rgba(6, 7, 51, 0.603) ;">
+  <h3 class="text-light" style="text-align: center;">TURNOS</h3>
+
+  <div *ngIf="true">
+
+<div class="container">
+ <div class="row">
+  <input class="form-control col-12" type="text" placeholder="Busqueda" style="box-shadow: rgb(255, 255, 255);" [(ngModel)]="datoABuscar" (ngModelChange)="buscar()">
+ </div>
+</div>
+<br>
+<h2 *ngIf="this.todosLosTurnos.length == 0" class="mt-3 text-light">No hay turnos</h2>
+    <div *ngFor="let turno of todosLosTurnos">
+
+      <div class="card-body" style="border-radius: 25px;">
+        <div [ngClass]="{'card-pendiente' : turno.estado == 'Pendiente','card-cancelado': turno.estado == 'Cancelado',
+        'card-aceptado' : turno.estado == 'Aceptado','card-rechazado' : turno.estado == 'Rechazado',
+        'card-realizado' : turno.estado == 'Realizado'}">
+          <div class="card-header" style="text-align: center;"> 
+            <b class="fs-5" >Fecha: {{turno.fecha.dia}} {{turno.fecha.hora}}</b> 
+            </div><br>
+          <div class="card-body">
+            <p class="card-text"> 
+                <b>Estado:</b> {{turno.estado}} 
+            </p>
+            <p class="card-text">
+                <p>
+                    <b>Paciente:</b> {{turno.paciente.nombre}} {{turno.paciente.apellido}}
+                </p>
+                <p>
+                    <b>Especialista:</b> {{turno.especialista.nombre}} {{turno.especialista.apellido}}
+                </p>
+                <p>
+                    <b>Especialidad:</b> {{turno.especialidad.nombre}}
+                </p>
+                <p *ngIf='turno.estado == "Cancelado" || turno.estado == "Rechazado"'>
+                    <b *ngIf='turno.comentarioAdministrador != undefined' >Comentario Administrador:</b> {{turno.comentarioAdministrador}}
+                    <b *ngIf='turno.comentarioEspecialista != undefined' >Comentario Especialista:</b> {{turno.comentarioEspecialista}}
+                    <b *ngIf='turno.comentarioPaciente != undefined' >Comentario Paciente:</b> {{turno.comentarioPaciente}}
+                </p>
+              <div class="container">
+                <div class="row">
+                  <div class="col" *ngIf="turno.estado == 'Pendiente'">
+                    <button class="btn-cancelar" (click)='this.cancelado = !this.cancelado'>Cancelar</button>
+                  </div>
+                </div>
+                <div class="mt-2 mb-2" *ngIf='this.cancelado'>
+                    <form [formGroup]="form" (ngSubmit)='this.cancelarTurno(turno)'>
+                      <div class="row">
+                        <div class="col">
+                          <input type="text" class="form-control" placeholder="Motivo por el cual desea cancelar el turno" formControlName="comentario"required>
+                          <small class="invalid" *ngIf="form.controls['comentario'].errors?.['required']">Para poder cancelar un turno es necesario un motivo</small>
+                          <small class="invalid" *ngIf="form.controls['comentario'].errors?.['minlength'] || form.controls['comentario'].errors?.['maxlength']">Debe tener entre 10 y 40 caracteres</small>
+                        </div>
+                      </div>
+                      <button type="submit" class="btn-enviar" *ngIf='this.cancelado' [disabled]="form.invalid">Enviar</button>
+                    </form>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <br>
+      </div>
+    </div>
+    <br>
+  </div>
+</div>

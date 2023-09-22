@@ -23,3 +23,118 @@
     -moz-box-shadow: 0px 10px 34px -15px rgb(5, 5, 5);
     box-shadow: 0px 10px 34px -15px rgb(0, 0, 0)
   }
+  .btn-turno{
+
+    --color: #160bad;
+    font-family: inherit;
+    display: inline-block;
+    width: 10em;
+    height: 5em;
+    line-height: 2.5em;
+    margin: 20px;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid var(--color);
+    transition: color .5s;
+    z-index: 1;
+    font-size: 17px;
+    border-radius: 6px;
+    font-weight: 500;
+    color: var(--color);
+  }
+  .btn-turno:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    background: var(--color);
+    height: 200px;
+    width: 400px;
+    border-radius: 50%;
+   }
+
+   .btn-turno:hover {
+    color: #fff;
+   }
+
+
+   .btn-turno:before {
+    top: 100%;
+    left: 100%;
+    transition: all .7s;
+   }
+
+   .btn-turno:hover:before {
+    top: -30px;
+    left: -30px;
+   }
+   
+   .btn-turn:active:before {
+    background: #280dc0;
+    transition: background 0s;
+   }
+
+
+   .btn-horario {
+    padding: 1.3em 3em;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    border-radius: 15px;
+    color: #000;
+    background-color: #fff;
+    border: none;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+    margin: 15px;
+  }
+  
+  .btn-horario:hover {
+    background-color: #280dc0;
+    box-shadow: 0px 15px 20px rgba(244, 252, 255, 0.4);
+    color: #fff;
+    transform: translateY(-7px);
+  }
+  
+  .btn-horario:active {
+    transform: translateY(-1px);
+  }
+
+  .spinner {
+    position: absolute;
+    margin-left: 47.5%;
+    margin-top: 32%;
+    z-index: 101;
+  
+    width: 56px;
+    height: 56px;
+    display: grid;
+    border: 4px solid #0000;
+    border-radius: 50%;
+    border-right-color: #004dff;
+    animation: spinner-a4dj62 1s infinite linear;
+  }
+  
+  .spinner::before,
+  .spinner::after {
+    content: "";
+    grid-area: 1/1;
+    margin: 2px;
+    border: inherit;
+    border-radius: 50%;
+    animation: spinner-a4dj62 2s infinite;
+  }
+  
+  .spinner::after {
+    margin: 8px;
+    animation-duration: 3s;
+  }
+  
+  @keyframes spinner-a4dj62 {
+    100% {
+      transform: rotate(1turn);
+    }
+  }
+  
